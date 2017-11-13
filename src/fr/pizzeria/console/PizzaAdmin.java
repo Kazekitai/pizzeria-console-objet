@@ -1,6 +1,8 @@
-package fr.pizerria.console;
+package fr.pizzeria.console;
 
 import java.util.Scanner;
+
+import fr.pizzeria.model.Pizza;
 
 public class PizzaAdmin {
 	/* ATTRIBUTES */
@@ -13,56 +15,47 @@ public class PizzaAdmin {
 	}
 	
 	/* METHODS */
+	
 	/**
-	 * Method to lunch application with class separated
+	 * Method to lunch application with methods in this class
 	 */
 	public void startApp() {
 		int option = 0;		
 		
-//		/* Pizza initialization */
-//		Pizza pep = new Pizza("PEP","Pépéroni",12.50);
-//		Pizza mar = new Pizza("MAR","Margherita",14.00);
-//		Pizza rein = new Pizza("REIN","La Reine",11.50);
-//		Pizza fro = new Pizza("FRO","La 4 fromage",12.50);
-//		Pizza can = new Pizza("CAN","La Cannibale",12.50);
-//		Pizza sav = new Pizza("SAV","La Savoyarde",13.00);
-//		Pizza ori = new Pizza("ORI","L'Orientale",13.50);
-//		Pizza ind = new Pizza("IND","L'Indienne",14.00);
-//		addPizza(pep);
-//		addPizza(mar);
-//		addPizza(rein);
-//		addPizza(fro);
-//		addPizza(can);
-//		addPizza(sav);
-//		addPizza(ori);
-//		addPizza(ind);
+		/* Pizza initialization */
+		Pizza pep = new Pizza("PEP","Pépéroni",12.50);
+		Pizza mar = new Pizza("MAR","Margherita",14.00);
+		Pizza rein = new Pizza("REIN","La Reine",11.50);
+		Pizza fro = new Pizza("FRO","La 4 fromage",12.50);
+		Pizza can = new Pizza("CAN","La Cannibale",12.50);
+		Pizza sav = new Pizza("SAV","La Savoyarde",13.00);
+		Pizza ori = new Pizza("ORI","L'Orientale",13.50);
+		Pizza ind = new Pizza("IND","L'Indienne",14.00);
+		addPizza(pep);
+		addPizza(mar);
+		addPizza(rein);
+		addPizza(fro);
+		addPizza(can);
+		addPizza(sav);
+		addPizza(ori);
+		addPizza(ind);
 		
-		/* Class instantiation*/
-//		ListerPizzasOptionMenu listerPizza = new ListerPizzasOptionMenu(pizzas);
-//		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu(pizzas);
-//		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu(pizzas);
-//		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu(pizzas);
-		ListerPizzasOptionMenu listerPizza = new ListerPizzasOptionMenu();
-		AjouterPizzaOptionMenu ajouterPizza = new AjouterPizzaOptionMenu();
-		ModifierPizzaOptionMenu modifierPizza = new ModifierPizzaOptionMenu();
-		SupprimerPizzaOptionMenu supprimerPizza = new SupprimerPizzaOptionMenu();
-		
-		//		System.out.println("taille du tableau: " + this.pizzas.length);
+//		System.out.println("taille du tableau: " + this.pizzas.length);
 		while(option != 99) {
 			displayMenu();
 			option = Integer.parseInt(scanner.nextLine());
 			switch (option) {
 			case 1:
-				listerPizza.execute();
+				displayMenu1();
 				break;
 			case 2:
-				ajouterPizza.execute();
+				displayMenu2();
 				break;
 			case 3:
-				modifierPizza.execute();
+				displayMenu3();
 				break;
 			case 4:
-				supprimerPizza.execute();
+				displayMenu4();
 				break;
 			case 99:
 				System.out.println("\nAurevoir "+ ":(");
@@ -73,57 +66,6 @@ public class PizzaAdmin {
 			}
 		}
 	}
-	
-	/**
-	 * Method to lunch application with methods in this class
-	 */
-//	public void startApp() {
-//		int option = 0;		
-//		
-//		/* Pizza initialization */
-//		Pizza pep = new Pizza("PEP","Pépéroni",12.50);
-//		Pizza mar = new Pizza("MAR","Margherita",14.00);
-//		Pizza rein = new Pizza("REIN","La Reine",11.50);
-//		Pizza fro = new Pizza("FRO","La 4 fromage",12.50);
-//		Pizza can = new Pizza("CAN","La Cannibale",12.50);
-//		Pizza sav = new Pizza("SAV","La Savoyarde",13.00);
-//		Pizza ori = new Pizza("ORI","L'Orientale",13.50);
-//		Pizza ind = new Pizza("IND","L'Indienne",14.00);
-//		addPizza(pep);
-//		addPizza(mar);
-//		addPizza(rein);
-//		addPizza(fro);
-//		addPizza(can);
-//		addPizza(sav);
-//		addPizza(ori);
-//		addPizza(ind);
-//		
-////		System.out.println("taille du tableau: " + this.pizzas.length);
-//		while(option != 99) {
-//			displayMenu();
-//			option = Integer.parseInt(scanner.nextLine());
-//			switch (option) {
-//			case 1:
-//				displayMenu1();
-//				break;
-//			case 2:
-//				displayMenu2();
-//				break;
-//			case 3:
-//				displayMenu3();
-//				break;
-//			case 4:
-//				displayMenu4();
-//				break;
-//			case 99:
-//				System.out.println("\nAurevoir "+ ":(");
-//				break;
-//			default:
-//				System.out.println("\nCette option n'existe pas!");
-//				break;
-//			}
-//		}
-//	}
 	
 	/**
 	 * Method to display Pizerria menu for administrator

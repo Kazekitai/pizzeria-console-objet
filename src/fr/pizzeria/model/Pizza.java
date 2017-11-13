@@ -1,4 +1,4 @@
-package fr.pizerria.console;
+package fr.pizzeria.model;
 
 public class Pizza {
 	/* ATTRIBUTES */
@@ -44,8 +44,6 @@ public class Pizza {
 	}
 	public void setPrix(double prix) {
 		this.prix = prix;
-	}
-	
-	
+	}	
 
 }

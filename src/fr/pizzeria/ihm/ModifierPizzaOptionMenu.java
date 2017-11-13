@@ -1,11 +1,10 @@
-package fr.pizerria.console;
+package fr.pizzeria.ihm;
+
+import fr.pizzeria.model.Pizza;
 
 public class ModifierPizzaOptionMenu extends OptionMenu{
 
 	/* CONSTRUCTOR */
-//	public ModifierPizzaOptionMenu(Pizza[] pizzas) {
-//		super(pizzas);
-//	}
 	public ModifierPizzaOptionMenu() {
 		super();
 	}
@@ -20,18 +19,11 @@ public class ModifierPizzaOptionMenu extends OptionMenu{
 	}
 	
 	/**
-	 * Method to update chose pizza
-	 * @param pizza
-	 * @param choice - the code of the chose pizza
+	 * Get Libelle of option
+	 * @return
 	 */
-	public void updatePizza(Pizza pizza,String choice) { 
-		for(int i=0;i<this.getPizzas().length;i++){
-			if(this.getPizzas()[i].getCode().equals(choice)) {
-				this.getPizzas()[i].setCode(pizza.getCode());
-				this.getPizzas()[i].setNom(pizza.getNom());
-				this.getPizzas()[i].setPrix(pizza.getPrix());
-			}
-		}
+	public String getLibelle() {
+		return "Mettre à jour une pizza";
 	}
 	
 	
@@ -54,14 +46,14 @@ public class ModifierPizzaOptionMenu extends OptionMenu{
 			String prixStr = scanner.nextLine(); 
 			
 			
-			if(code != null && code.length() == 2 ) {
+			if(code != null && code.length() == 3 ) {
 				/* Code has to be to upperCase */
 				code = code.toUpperCase();
 				if(nom != null && prixStr != null) {
 					double prix = Double.parseDouble(prixStr);
 					if(prix > 0) {
 						Pizza pizza = new Pizza(code,nom,prix);
-						updatePizza(pizza,choice);
+						this.getDao().updatePizza(choice, pizza);
 					} else {
 						System.out.println("Erreur de saisie: ");
 						System.out.println(" Le prix doit être positif");

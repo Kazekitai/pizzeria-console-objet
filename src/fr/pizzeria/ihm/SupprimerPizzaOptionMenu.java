@@ -1,4 +1,6 @@
-package fr.pizerria.console;
+package fr.pizzeria.ihm;
+
+import fr.pizzeria.model.Pizza;
 
 public class SupprimerPizzaOptionMenu extends OptionMenu{
 	
@@ -19,6 +21,13 @@ public class SupprimerPizzaOptionMenu extends OptionMenu{
 		displayMenu4();
 	}
 	
+	/**
+	 * Get Libelle of option
+	 * @return
+	 */
+	public String getLibelle() {
+		return "Supprimer une pizza";
+	}
 	
 	/**
 	 * Display menu 4 to delete pizza
@@ -30,7 +39,7 @@ public class SupprimerPizzaOptionMenu extends OptionMenu{
 		System.out.println("Veuillez choisir la pizza à supprimer (saisir le code) : ");
 		String choice = scanner.nextLine();
 		if(choice != "99") {
-			deletePizza(choice);
+			this.getDao().deletePizza(choice);
 		}
 	}
 	

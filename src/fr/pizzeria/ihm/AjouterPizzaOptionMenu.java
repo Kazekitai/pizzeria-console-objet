@@ -1,11 +1,10 @@
-package fr.pizerria.console;
+package fr.pizzeria.ihm;
+
+import fr.pizzeria.model.Pizza;
 
 public class AjouterPizzaOptionMenu extends OptionMenu{
 	
 	/* CONSTRUCTOR */
-//	public AjouterPizzaOptionMenu(Pizza [] pizzas) {
-//		super(pizzas);
-//	}
 	public AjouterPizzaOptionMenu() {
 		super();
 	}
@@ -20,21 +19,13 @@ public class AjouterPizzaOptionMenu extends OptionMenu{
 	}
 	
 	/**
-	 * Method to add pizza
-	 * @param pizza
+	 * Get Libelle of option
+	 * @return
 	 */
-	public void addPizza(Pizza pizza) {
-		Pizza [] pizzasTmp = new Pizza [this.getPizzas().length+1];
-		int j=0;
-		for(int i=0;i<this.getPizzas().length;i++){
-			pizzasTmp[j]=this.getPizzas()[i];
-			j++;
-		}
-		pizzasTmp[this.getPizzas().length]=pizza;
-		pizzasTmp[this.getPizzas().length].setId(j);
-		this.setPizzas(pizzasTmp);
-		System.out.println("\nPizzas size: "+ this.getPizzas().length);
+	public String getLibelle() {
+		return "Ajouter une pizza";
 	}
+	
 	
 	/**
 	 * Display menu 2 to add pizza
@@ -56,7 +47,8 @@ public class AjouterPizzaOptionMenu extends OptionMenu{
 				double prix = Double.parseDouble(prixStr);
 				if(prix > 0) {
 					Pizza pizza = new Pizza(code,nom,prix);
-					addPizza(pizza);
+					this.getDao().saveNewPizza(pizza);
+//					addPizza(pizza);
 				} else {
 					System.out.println("Erreur de saisie: ");
 					System.out.println(" Le prix doit être positif");
@@ -73,4 +65,5 @@ public class AjouterPizzaOptionMenu extends OptionMenu{
 		}
 		
 	}
+	
 }
