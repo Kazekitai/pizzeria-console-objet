@@ -2,58 +2,38 @@ package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.PizzaDao;
-import fr.pizzeria.model.Pizza;
+import fr.pizzeria.dao.IPizzaDao;
 
 public abstract class OptionMenu {
 	/* ATTRIBUTES */
-	private static Pizza [] pizzas = new Pizza[0];
-	public Scanner scanner = new Scanner(System.in);
-	private PizzaDao dao = new PizzaDao();
-	
+	Scanner scanner = new Scanner(System.in);
+
 	public OptionMenu() {
 	}
-	
-	/*METHODS*/
+
+	/* METHODS */
 	/**
 	 * Method Execute
 	 */
-	public abstract void execute();
-	
+	public abstract boolean execute();
+
 	/**
-	 * Get Libelle of option
+	 * Get label of option
+	 * 
 	 * @return
 	 */
-	public abstract String getLibelle();
-	
+	public abstract String getLabel();
+
 	/**
 	 * Method to display list of pizza
 	 */
-	public void displayPizzaList() {
+	public boolean displayPizzaList(IPizzaDao dao) {
 		System.out.println("\nListe des pizzas");
-		for(int i=0;i<this.pizzas.length;i++) {
-			this.pizzas[i].displayPizzaString();
-//			System.out.println("id pizza: "+ this.pizzas[i].getId());
+		for (int i = 0; i < dao.getPizzas().length; i++) {
+			System.out.println(dao.getPizzas()[i].toString());
+			// System.out.println("id pizza: "+ this.pizzas[i].getId());
 		}
-	}
-	
-	/* GETTERS AND SETTERS*/
-	public Pizza[] getPizzas() {
-		return pizzas;
+		return true;
 	}
 
-	public void setPizzas(Pizza[] pizzas) {
-		this.pizzas = pizzas;
-	}
-
-	public PizzaDao getDao() {
-		return dao;
-	}
-
-	public void setDao(PizzaDao dao) {
-		this.dao = dao;
-	}
-	
-	
-	
 }

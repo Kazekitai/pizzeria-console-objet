@@ -1,48 +1,42 @@
 package fr.pizzeria.ihm;
 
+import fr.pizzeria.dao.IPizzaDao;
+
 public class ListerPizzasOptionMenu extends OptionMenu {
+	/* ATTRIBUTES */
+	IPizzaDao dao;
 
 	/* CONSTRUCTOR */
-	public ListerPizzasOptionMenu() {
+	public ListerPizzasOptionMenu(IPizzaDao dao) {
 		super();
+		this.dao = dao;
 	}
-	
+
 	/* METHODS */
-	
+
 	/**
 	 * Method Execute
 	 */
-	public void execute() {
-		displayMenu1();
+	public boolean execute() {
+		return displayMenu1();
 	}
-	
+
 	/**
-	 * Get Libelle of option
+	 * Get label of option
+	 * 
 	 * @return
 	 */
-	public String getLibelle() {
+	public String getLabel() {
 		return "Lister les pizzas";
 	}
-	
+
 	/**
-	 * Display menu 1 to show list of pizzas
+	 * Display menu 1 to show list of pizza
 	 */
-	public void displayMenu1() {
+	public boolean displayMenu1() {
 		System.out.println("\nListe des pizzas");
-		displayPizzaList();
+		return super.displayPizzaList(dao);
 	}
-	
-	/**
-	 * Method to display list of pizza
-	 */
-	public void displayPizzaList() {
-		System.out.println("\nPizzas size: "+ this.getDao().getPizzas().length);
-		for(int i=0;i<this.getDao().getPizzas().length;i++) {
-			this.getDao().getPizzas()[i].displayPizzaString();
-//			System.out.println("id pizza: "+ this.pizzas[i].getId());
-		}
-	}
-	
 
 
 }

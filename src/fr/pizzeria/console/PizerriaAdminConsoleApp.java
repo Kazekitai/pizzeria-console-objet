@@ -5,8 +5,8 @@ import fr.pizzeria.ihm.Menu;
 public class PizerriaAdminConsoleApp {
 
 	public static void main(String[] args) {
-		Menu app = new Menu();
-		app.startApp();
+		Menu menu = new Menu();
+		menu.afficher();
 	}
 
 

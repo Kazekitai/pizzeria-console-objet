@@ -2,9 +2,12 @@ package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
+import fr.pizzeria.dao.PizzaDao;
+
 public class Menu {
 	/* ATTRIBUTES */
 	Scanner scanner = new Scanner(System.in);
+	private PizzaDao dao = new PizzaDao();
 	private String title;
 	private OptionMenu[] optionMenus;
 	private static final int DISPLAY_PIZZA = 0;
@@ -12,28 +15,28 @@ public class Menu {
 	private static final int UPDATE_PIZZA = 2;
 	private static final int DELETE_PIZZA = 3;
 	private static final int INITIALIZE_PIZZA = 4;
-	
+
 	/* CONSTRUCTOR */
-	public Menu(){
+	public Menu() {
 		title = "***** Pizzeria Administration *****";
 		optionMenus = new OptionMenu[5];
-		optionMenus[DISPLAY_PIZZA] = new ListerPizzasOptionMenu();
-		optionMenus[ADD_PIZZA] = new AjouterPizzaOptionMenu();
-		optionMenus[UPDATE_PIZZA] = new ModifierPizzaOptionMenu();
-		optionMenus[DELETE_PIZZA] = new SupprimerPizzaOptionMenu();
-		optionMenus[INITIALIZE_PIZZA] = new InitialisePizzaOptionMenu();
+		optionMenus[DISPLAY_PIZZA] = new ListerPizzasOptionMenu(dao);
+		optionMenus[ADD_PIZZA] = new AjouterPizzaOptionMenu(dao);
+		optionMenus[UPDATE_PIZZA] = new ModifierPizzaOptionMenu(dao);
+		optionMenus[DELETE_PIZZA] = new SupprimerPizzaOptionMenu(dao);
+		optionMenus[INITIALIZE_PIZZA] = new InitialisePizzaOptionMenu(dao);
 	}
-	
+
 	/**
 	 * Method to lunch application with class separated
 	 */
-	public void startApp() {
+	public void afficher() {
 		int option = 0;
 		/* Pizza initialization */
 		optionMenus[INITIALIZE_PIZZA].execute();
-		
+
 		/* Run application */
-		while(option != 99) {
+		while (option != 99) {
 			displayMenu();
 			option = Integer.parseInt(scanner.nextLine());
 			switch (option) {
@@ -50,7 +53,7 @@ public class Menu {
 				optionMenus[DELETE_PIZZA].execute();
 				break;
 			case 99:
-				System.out.println("\nAurevoir "+ ":(");
+				System.out.println("\nAurevoir " + ":(");
 				break;
 			default:
 				System.out.println("\nCette option n'existe pas!");
@@ -58,22 +61,21 @@ public class Menu {
 			}
 		}
 	}
-	
+
 	/**
 	 * Method to display Pizzeria menu for administrator
 	 */
-	public void displayMenu(){
-		System.out.println(this.title);
-		for (int i=0; i<optionMenus.length-1; i++){
-			if (optionMenus[i]!=null){
-				System.out.println(optionMenus[i].getLibelle());
+	public void displayMenu() {
+		System.out.println("\n" + this.title);
+		for (int i = 0; i < optionMenus.length - 1; i++) {
+			if (optionMenus[i] != null) {
+				System.out.println((i + 1) + ". " + optionMenus[i].getLabel());
 			}
 		}
 		System.out.println("99. Sortir.");
 		System.out.println("Quelle action voulez-vous effectuer?");
 	}
-	
-	
+
 	/* GETTER */
 	public OptionMenu[] getOptionMenus() {
 		return optionMenus;

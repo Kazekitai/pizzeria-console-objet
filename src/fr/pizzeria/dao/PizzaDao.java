@@ -4,7 +4,7 @@ import fr.pizzeria.model.Pizza;
 
 public class PizzaDao implements IPizzaDao {
 	/* ATTRIBUTES */
-	private static Pizza [] pizzas = new Pizza[0];
+	private Pizza [] pizzas = new Pizza[0];
 
 	/* METHODS */
 	/**
@@ -31,9 +31,8 @@ public class PizzaDao implements IPizzaDao {
 			j++;
 		}
 		pizzasTmp[this.getPizzas().length]=pizza;
-		pizzasTmp[this.getPizzas().length].setId(j);
 		this.setPizzas(pizzasTmp);
-		return false;
+		return true;
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class PizzaDao implements IPizzaDao {
 				this.getPizzas()[i].setPrix(pizza.getPrix());
 			}
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -68,16 +67,16 @@ public class PizzaDao implements IPizzaDao {
 			}
 		}
 		this.setPizzas(pizzasTmp);
-		return false;
+		return true;
 	}
 	
 	/* GETTERS AND SETTERS */
-	public static Pizza[] getPizzas() {
+	public Pizza[] getPizzas() {
 		return pizzas;
 	}
 
-	public static void setPizzas(Pizza[] pizzas) {
-		PizzaDao.pizzas = pizzas;
+	public void setPizzas(Pizza[] pizzas) {
+		this.pizzas = pizzas;
 	}
 
 }
