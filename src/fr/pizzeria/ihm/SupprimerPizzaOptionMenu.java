@@ -1,6 +1,7 @@
 package fr.pizzeria.ihm;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.model.Pizza;
 
 public class SupprimerPizzaOptionMenu extends OptionMenu {
@@ -16,8 +17,9 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 
 	/**
 	 * Method Execute
+	 * @throws DeletePizzaException 
 	 */
-	public boolean execute() {
+	public boolean execute() throws DeletePizzaException {
 		return displayMenu4();
 	}
 
@@ -32,15 +34,26 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 
 	/**
 	 * Display menu 4 to delete pizza
+	 * @throws DeletePizzaException 
 	 */
-	public boolean displayMenu4() {
+	public boolean displayMenu4() throws DeletePizzaException {
 		System.out.println("\nSupression d'une pizza");
 		displayPizzaList(dao);
 		System.out.println("99 pour abandonner");
 		System.out.println("Veuillez choisir la pizza à supprimer (saisir le code) : ");
 		String choice = scanner.nextLine();
 		if (!choice.equals("99")) {
-			return this.dao.deletePizza(choice);
+			choice = choice.toUpperCase();
+			int exist = 0;
+			for (int i = 0; i < dao.getPizzas().length; i++) {
+				if (dao.getPizzas()[i].getCode().equals(choice)) {
+					exist++;
+				}
+			}
+			if(exist == 0) {
+				throw new DeletePizzaException("Erreur le code de la pizza n'est pas reconnu");
+			}
+			return true;
 		} else {
 			return false;
 		}

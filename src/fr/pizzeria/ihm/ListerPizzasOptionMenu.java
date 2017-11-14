@@ -34,7 +34,6 @@ public class ListerPizzasOptionMenu extends OptionMenu {
 	 * Display menu 1 to show list of pizza
 	 */
 	public boolean displayMenu1() {
-		System.out.println("\nListe des pizzas");
 		return super.displayPizzaList(dao);
 	}
 

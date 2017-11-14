@@ -3,6 +3,7 @@ package fr.pizzeria.ihm;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.PizzaDao;
+import fr.pizzeria.exception.StockageException;
 
 public class Menu {
 	/* ATTRIBUTES */
@@ -33,24 +34,45 @@ public class Menu {
 	public void afficher() {
 		int option = 0;
 		/* Pizza initialization */
-		optionMenus[INITIALIZE_PIZZA].execute();
+		try {
+			optionMenus[INITIALIZE_PIZZA].execute();
+		} catch (StockageException e) {
+			e.printStackTrace();
+		}
 
 		/* Run application */
 		while (option != 99) {
 			displayMenu();
 			option = Integer.parseInt(scanner.nextLine());
+			
 			switch (option) {
 			case 1:
-				optionMenus[DISPLAY_PIZZA].execute();
+				try {
+					optionMenus[DISPLAY_PIZZA].execute();
+				} catch (StockageException e) {
+					e.printStackTrace();
+				}
 				break;
 			case 2:
-				optionMenus[ADD_PIZZA].execute();
+				try {
+					optionMenus[ADD_PIZZA].execute();
+				} catch (StockageException e) {
+					e.printStackTrace();
+				}
 				break;
 			case 3:
-				optionMenus[UPDATE_PIZZA].execute();
+				try {
+					optionMenus[UPDATE_PIZZA].execute();
+				} catch (StockageException e) {
+					e.printStackTrace();
+				}
 				break;
 			case 4:
-				optionMenus[DELETE_PIZZA].execute();
+				try {
+					optionMenus[DELETE_PIZZA].execute();
+				} catch (StockageException e) {
+					e.printStackTrace();
+				}
 				break;
 			case 99:
 				System.out.println("\nAurevoir " + ":(");
@@ -60,6 +82,7 @@ public class Menu {
 				break;
 			}
 		}
+		scanner.close();
 	}
 
 	/**

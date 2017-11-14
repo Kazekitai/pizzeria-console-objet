@@ -1,6 +1,7 @@
 package fr.pizzeria.ihm;
 
 import fr.pizzeria.dao.IPizzaDao;
+import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.model.Pizza;
 
 public class AjouterPizzaOptionMenu extends OptionMenu {
@@ -16,10 +17,10 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 
 	/**
 	 * Method Execute
+	 * @throws SavePizzaException 
 	 */
-	public boolean execute() {
-		displayMenu2();
-		return true;
+	public boolean execute() throws SavePizzaException {
+		return displayMenu2();
 	}
 
 	/**
@@ -34,42 +35,45 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	/**
 	 * Display menu 2 to add pizza
 	 */
-	public boolean displayMenu2() {
+	public boolean displayMenu2() throws SavePizzaException {
 		System.out.println("\nAjout d'une nouvelle pizza");
 		System.out.println("Veuillez saisir le code: ");
 		String code = scanner.nextLine();
+		System.out.println("code: " + code);
+		if (code.isEmpty()) {
+			throw new SavePizzaException("Erreur le code de la pizza est vide");	
+		} 
+		
+		if (code.length() != 3) {
+			throw new SavePizzaException("Erreur le nombre de caractères du code de la pizza est différent 3");
+		} 
+		
 		System.out.println("Veuillez saisir le nom: ");
 		String nom = scanner.nextLine();
+		
+		if (nom.isEmpty()) {
+			throw new SavePizzaException("Erreur le nom de la pizza est vide ");
+		} 
+		
 		System.out.println("Veuillez saisir le prix: ");
 		String prixStr = scanner.nextLine();
-
-		if (code != null && code.length() == 3) {
-			/* Code has to be to upperCase */
-			code = code.toUpperCase();
-			if (nom != null && prixStr != null) {
+		
+		if (prixStr.isEmpty()) {
+			throw new SavePizzaException("Erreur le prix de la pizza est vide");
+		} 
+		
+		try {
+				if (Double.parseDouble(prixStr) < 0) {
+					throw new SavePizzaException("Erreur le prix ne peux pas être négatif");
+				} 
 				double prix = Double.parseDouble(prixStr);
-				if (prix > 0) {
-					Pizza pizza = new Pizza(code, nom, prix, this.dao.getPizzas());
-					return this.dao.saveNewPizza(pizza);
-				} else {
-					System.out.println("Erreur de saisie: ");
-					System.out.println(" Le prix doit être positif");
-					return false;
-				}
-			} else {
-				System.out.println("Erreur de saisie: ");
-				System.out.println(" Le nom doit être saisi");
-				System.out.println(" Le prix doit être saisi");
+			 	code = code.toUpperCase();
+				Pizza pizza = new Pizza(code, nom, prix, this.dao.getPizzas());
+				return this.dao.saveNewPizza(pizza);		
+			} catch (NumberFormatException  e) {
+				System.out.println("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
 				return false;
 			}
-
-		} else {
-			System.out.println("Erreur de saisie : ");
-			System.out.println("le code doit comporter 3 lettres");
-			return false;
-			
-		}
-
 	}
 
 }

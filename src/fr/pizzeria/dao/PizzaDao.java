@@ -13,6 +13,7 @@ public class PizzaDao implements IPizzaDao {
 	@Override
 	public Pizza[] findAllPizza() {
 		for(int i=0;i<this.getPizzas().length;i++) {
+			/* display all pizza */
 			this.getPizzas()[i].displayPizzaString();
 		}
 		return null;
