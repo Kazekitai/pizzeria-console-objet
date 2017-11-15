@@ -1,5 +1,7 @@
 package fr.pizzeria.model;
 
+import java.util.ArrayList;
+
 public class Pizza {
 	/* ATTRIBUTES */
 	private int id;
@@ -27,12 +29,12 @@ public class Pizza {
 		this.prix = prix;
 	}
 
-	public Pizza(String code, String nom, double prix, Pizza[] pizzas) {
+	public Pizza(String code, String nom, double prix,  ArrayList<Pizza> pizzas) {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
 		int j = 0;
-		for (int i = 0; i < pizzas.length; i++) {
+		for (int i = 0; i < pizzas.size(); i++) {
 			j++;
 		}
 		this.id = j;

@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.PizzaDao;
@@ -10,7 +11,7 @@ public class Menu {
 	Scanner scanner = new Scanner(System.in);
 	private PizzaDao dao = new PizzaDao();
 	private String title;
-	private OptionMenu[] optionMenus;
+	private HashMap<Integer,OptionMenu> optionMenus = new HashMap<Integer,OptionMenu>();
 	private static final int DISPLAY_PIZZA = 0;
 	private static final int ADD_PIZZA = 1;
 	private static final int UPDATE_PIZZA = 2;
@@ -20,12 +21,11 @@ public class Menu {
 	/* CONSTRUCTOR */
 	public Menu() {
 		title = "***** Pizzeria Administration *****";
-		optionMenus = new OptionMenu[5];
-		optionMenus[DISPLAY_PIZZA] = new ListerPizzasOptionMenu(dao);
-		optionMenus[ADD_PIZZA] = new AjouterPizzaOptionMenu(dao);
-		optionMenus[UPDATE_PIZZA] = new ModifierPizzaOptionMenu(dao);
-		optionMenus[DELETE_PIZZA] = new SupprimerPizzaOptionMenu(dao);
-		optionMenus[INITIALIZE_PIZZA] = new InitialisePizzaOptionMenu(dao);
+		optionMenus.put(DISPLAY_PIZZA, new ListerPizzasOptionMenu(dao));
+		optionMenus.put(ADD_PIZZA, new AjouterPizzaOptionMenu(dao));
+		optionMenus.put(UPDATE_PIZZA, new ModifierPizzaOptionMenu(dao));
+		optionMenus.put(DELETE_PIZZA, new SupprimerPizzaOptionMenu(dao));
+		optionMenus.put(INITIALIZE_PIZZA, new InitialisePizzaOptionMenu(dao));
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class Menu {
 		int option = 0;
 		/* Pizza initialization */
 		try {
-			optionMenus[INITIALIZE_PIZZA].execute();
+			optionMenus.get(INITIALIZE_PIZZA).execute();
 		} catch (StockageException e) {
 			e.printStackTrace();
 		}
@@ -48,28 +48,28 @@ public class Menu {
 			switch (option) {
 			case 1:
 				try {
-					optionMenus[DISPLAY_PIZZA].execute();
+					optionMenus.get(DISPLAY_PIZZA).execute();
 				} catch (StockageException e) {
 					e.printStackTrace();
 				}
 				break;
 			case 2:
 				try {
-					optionMenus[ADD_PIZZA].execute();
+					optionMenus.get(ADD_PIZZA).execute();
 				} catch (StockageException e) {
 					e.printStackTrace();
 				}
 				break;
 			case 3:
 				try {
-					optionMenus[UPDATE_PIZZA].execute();
+					optionMenus.get(UPDATE_PIZZA).execute();
 				} catch (StockageException e) {
 					e.printStackTrace();
 				}
 				break;
 			case 4:
 				try {
-					optionMenus[DELETE_PIZZA].execute();
+					optionMenus.get(DELETE_PIZZA).execute();
 				} catch (StockageException e) {
 					e.printStackTrace();
 				}
@@ -90,9 +90,9 @@ public class Menu {
 	 */
 	public void displayMenu() {
 		System.out.println("\n" + this.title);
-		for (int i = 0; i < optionMenus.length - 1; i++) {
-			if (optionMenus[i] != null) {
-				System.out.println((i + 1) + ". " + optionMenus[i].getLabel());
+		for (int i = 0; i < optionMenus.size() - 1; i++) {
+			if (optionMenus.get(i) != null) {
+				System.out.println((i + 1) + ". " + optionMenus.get(i).getLabel());
 			}
 		}
 		System.out.println("99. Sortir.");
@@ -100,7 +100,7 @@ public class Menu {
 	}
 
 	/* GETTER */
-	public OptionMenu[] getOptionMenus() {
+	public HashMap<Integer,OptionMenu> getOptionMenus() {
 		return optionMenus;
 	}
 

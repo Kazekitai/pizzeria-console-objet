@@ -1,20 +1,22 @@
 package fr.pizzeria.dao;
 
+import java.util.ArrayList;
+
 import fr.pizzeria.model.Pizza;
 
 public class PizzaDao implements IPizzaDao {
 	/* ATTRIBUTES */
-	private Pizza [] pizzas = new Pizza[0];
+	private ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 
 	/* METHODS */
 	/**
 	 * Find all pizza
 	 */
 	@Override
-	public Pizza[] findAllPizza() {
-		for(int i=0;i<this.getPizzas().length;i++) {
+	public ArrayList<Pizza> findAllPizza() {
+		for(int i=0;i<this.getPizzas().size();i++) {
 			/* display all pizza */
-			this.getPizzas()[i].displayPizzaString();
+			this.getPizzas().get(i).displayPizzaString();
 		}
 		return null;
 	}
@@ -25,14 +27,7 @@ public class PizzaDao implements IPizzaDao {
 	 */
 	@Override
 	public boolean saveNewPizza(Pizza pizza) {
-		Pizza [] pizzasTmp = new Pizza [this.getPizzas().length+1];
-		int j=0;
-		for(int i=0;i<this.getPizzas().length;i++){
-			pizzasTmp[j]=this.getPizzas()[i];
-			j++;
-		}
-		pizzasTmp[this.getPizzas().length]=pizza;
-		this.setPizzas(pizzasTmp);
+		this.getPizzas().add(pizza);
 		return true;
 	}
 
@@ -43,11 +38,11 @@ public class PizzaDao implements IPizzaDao {
 	 */
 	@Override
 	public boolean updatePizza(String codePizza, Pizza pizza) {
-		for(int i=0;i<this.getPizzas().length;i++){
-			if(this.getPizzas()[i].getCode().equals(codePizza)) {
-				this.getPizzas()[i].setCode(pizza.getCode());
-				this.getPizzas()[i].setNom(pizza.getNom());
-				this.getPizzas()[i].setPrix(pizza.getPrix());
+		for(int i=0;i<this.getPizzas().size();i++){
+			if(this.getPizzas().get(i).getCode().equals(codePizza)) {
+				this.getPizzas().get(i).setCode(pizza.getCode());
+				this.getPizzas().get(i).setNom(pizza.getNom());
+				this.getPizzas().get(i).setPrix(pizza.getPrix());
 			}
 		}
 		return true;
@@ -59,24 +54,20 @@ public class PizzaDao implements IPizzaDao {
 	 */
 	@Override
 	public boolean deletePizza(String codePizza) {
-		Pizza [] pizzasTmp = new Pizza [this.getPizzas().length-1];
-		int j=0;
-		for(int i=0;i<this.getPizzas().length;i++){
-			if(!this.getPizzas()[i].getCode().equals(codePizza)) {
-				pizzasTmp[j]=this.getPizzas()[i];
-				j++;
+		for(int i=0;i<this.getPizzas().size();i++){
+			if(this.getPizzas().get(i).getCode().equals(codePizza)) {
+				this.getPizzas().remove(i);
 			}
 		}
-		this.setPizzas(pizzasTmp);
 		return true;
 	}
 	
 	/* GETTERS AND SETTERS */
-	public Pizza[] getPizzas() {
+	public ArrayList<Pizza> getPizzas() {
 		return pizzas;
 	}
 
-	public void setPizzas(Pizza[] pizzas) {
+	public void setPizzas(ArrayList<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
 

@@ -45,35 +45,17 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 		if (!choice.equals("99")) {
 			choice = choice.toUpperCase();
 			int exist = 0;
-			for (int i = 0; i < dao.getPizzas().length; i++) {
-				if (dao.getPizzas()[i].getCode().equals(choice)) {
+			for (int i = 0; i < dao.getPizzas().size(); i++) {
+				if (dao.getPizzas().get(i).getCode().equals(choice)) {
 					exist++;
 				}
 			}
 			if(exist == 0) {
 				throw new DeletePizzaException("Erreur le code de la pizza n'est pas reconnu");
 			}
-			return true;
+			return dao.deletePizza(choice);
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Method to delete chose pizza
-	 * 
-	 * @param pizza
-	 * @param choice
-	 */
-	public void deletePizza(String choice) {
-		Pizza[] pizzasTmp = new Pizza[this.dao.getPizzas().length - 1];
-		int j = 0;
-		for (int i = 0; i < this.dao.getPizzas().length; i++) {
-			if (!this.dao.getPizzas()[i].getCode().equals(choice)) {
-				pizzasTmp[j] = this.dao.getPizzas()[i];
-				j++;
-			}
-		}
-		this.dao.setPizzas(pizzasTmp);
 	}
 }

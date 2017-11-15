@@ -30,9 +30,9 @@ public abstract class OptionMenu {
 	 * Method to display list of pizza
 	 */
 	public boolean displayPizzaList(IPizzaDao dao) {
-		System.out.println("\nListe des pizzas (" + dao.getPizzas().length + " pizza)\n");
-		for (int i = 0; i < dao.getPizzas().length; i++) {
-			System.out.println(dao.getPizzas()[i].toString());
+		System.out.println("\nListe des pizzas (" + dao.getPizzas().size() + " pizza)\n");
+		for (int i = 0; i < dao.getPizzas().size(); i++) {
+			System.out.println(dao.getPizzas().get(i).toString());
 			// System.out.println("id pizza: "+ this.pizzas[i].getId());
 		}
 		return true;
