@@ -7,6 +7,23 @@ import fr.pizzeria.model.Pizza;
 public class PizzaDao implements IPizzaDao {
 	/* ATTRIBUTES */
 	private ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+	
+	/* CONSTRUCTOR */
+	/**
+	 * Constructor PizzaDao
+	 */
+	public PizzaDao() {
+		/* Initialization of pizza list */
+		pizzas.add(new Pizza("PEP","Pépéroni","VIANDE",12.50,getPizzas()));
+		pizzas.add(new Pizza("MAR","Margherita","SANS_VIANDE",14.00,getPizzas()));
+		pizzas.add(new Pizza("REI","La Reine","SANS_VIANDE",11.50,getPizzas()));
+		pizzas.add(new Pizza("FRO","La 4 fromage","VIANDE",12.50,getPizzas()));
+		pizzas.add(new Pizza("CAN","La Cannibale","VIANDE",12.50,getPizzas()));
+		pizzas.add(new Pizza("SAV","La Savoyarde","VIANDE",13.00,getPizzas()));
+		pizzas.add(new Pizza("ORI","L'Orientale","VIANDE",13.50,getPizzas()));
+		pizzas.add(new Pizza("IND","L'Indienne","VIANDE",14.00,getPizzas()));
+		
+	}
 
 	/* METHODS */
 	/**
@@ -14,11 +31,7 @@ public class PizzaDao implements IPizzaDao {
 	 */
 	@Override
 	public ArrayList<Pizza> findAllPizza() {
-		for(int i=0;i<this.getPizzas().size();i++) {
-			/* display all pizza */
-			this.getPizzas().get(i).displayPizzaString();
-		}
-		return null;
+		return pizzas;
 	}
 
 	/**

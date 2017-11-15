@@ -16,7 +16,6 @@ public class Menu {
 	private static final int ADD_PIZZA = 1;
 	private static final int UPDATE_PIZZA = 2;
 	private static final int DELETE_PIZZA = 3;
-	private static final int INITIALIZE_PIZZA = 4;
 
 	/* CONSTRUCTOR */
 	public Menu() {
@@ -25,7 +24,6 @@ public class Menu {
 		optionMenus.put(ADD_PIZZA, new AjouterPizzaOptionMenu(dao));
 		optionMenus.put(UPDATE_PIZZA, new ModifierPizzaOptionMenu(dao));
 		optionMenus.put(DELETE_PIZZA, new SupprimerPizzaOptionMenu(dao));
-		optionMenus.put(INITIALIZE_PIZZA, new InitialisePizzaOptionMenu(dao));
 	}
 
 	/**
@@ -33,13 +31,6 @@ public class Menu {
 	 */
 	public void afficher() {
 		int option = 0;
-		/* Pizza initialization */
-		try {
-			optionMenus.get(INITIALIZE_PIZZA).execute();
-		} catch (StockageException e) {
-			e.printStackTrace();
-		}
-
 		/* Run application */
 		while (option != 99) {
 			displayMenu();

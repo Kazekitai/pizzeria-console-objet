@@ -5,9 +5,13 @@ import java.util.ArrayList;
 public class Pizza {
 	/* ATTRIBUTES */
 	private int id;
+	@ToString(separator=" -> ",uppercase=true)
 	private String code;
+	@ToString(uppercase=true)
 	private String nom;
+	@ToString(separator=" € - ")
 	private double prix;
+	@ToString
 	private CategoriePizza categoriePizza;
 
 	/* CONSTRUCTOR */
@@ -19,6 +23,7 @@ public class Pizza {
 
 	/**
 	 * Constructor with parameters except id
+	 * 
 	 * @param code
 	 * @param nom
 	 * @param categorie
@@ -33,13 +38,14 @@ public class Pizza {
 
 	/**
 	 * Constructor
+	 * 
 	 * @param code
 	 * @param nom
 	 * @param categorie
 	 * @param prix
 	 * @param pizzas
 	 */
-	public Pizza(String code, String nom, String categorie, double prix,  ArrayList<Pizza> pizzas) {
+	public Pizza(String code, String nom, String categorie, double prix, ArrayList<Pizza> pizzas) {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
@@ -56,27 +62,29 @@ public class Pizza {
 	 * Method to display list of pizza
 	 */
 	public void displayPizzaString() {
-		System.out.println(this.getCode() + " -> " + this.getNom() +  " - " + this.categoriePizza.getValue() + " (" + this.getPrix() + " €)");
+		System.out.println(this.getCode() + " -> " + this.getNom() + " - " + this.categoriePizza.getValue() + " ("
+				+ this.getPrix() + " €)");
 	}
 
 	/**
 	 * Method to return String value of Pizza object
 	 */
 	public String toString() {
-		return this.getCode() + " -> " + this.getNom() +  " - " + this.categoriePizza.getValue() + " (" + this.getPrix() + " €)";
+		return StringUtils.getStringValue(this);
 	}
-	
+
 	public CategoriePizza getCategory(String value) {
-		CategoriePizza categorie= null;
-		switch(value) {
-		case "VIANDE": categorie = CategoriePizza.VIANDE;
+		CategoriePizza categorie = null;
+		switch (value) {
+		case "VIANDE":
+			categorie = CategoriePizza.VIANDE;
 			break;
 		}
 		return categorie;
 	}
 
 	/* GETTERS AND SETTERS */
-	
+
 	/**
 	 * @return the categoriePizza
 	 */
@@ -92,7 +100,8 @@ public class Pizza {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -106,7 +115,8 @@ public class Pizza {
 	}
 
 	/**
-	 * @param code the code to set
+	 * @param code
+	 *            the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -120,7 +130,8 @@ public class Pizza {
 	}
 
 	/**
-	 * @param nom the nom to set
+	 * @param nom
+	 *            the nom to set
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -134,18 +145,19 @@ public class Pizza {
 	}
 
 	/**
-	 * @param prix the prix to set
+	 * @param prix
+	 *            the prix to set
 	 */
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
 	/**
-	 * @param categoriePizza the categoriePizza to set
+	 * @param categoriePizza
+	 *            the categoriePizza to set
 	 */
 	public void setCategoriePizza(CategoriePizza categoriePizza) {
 		this.categoriePizza = categoriePizza;
 	}
 
-	
 }
