@@ -1,8 +1,8 @@
 package fr.pizzeria.ihm;
 
 import fr.pizzeria.dao.IPizzaDao;
-import fr.pizzeria.exception.DeletePizzaException;
 import fr.pizzeria.exception.UpdatePizzaException;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class ModifierPizzaOptionMenu extends OptionMenu {
@@ -72,6 +72,26 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 			if (nom.isEmpty()) {
 				throw new UpdatePizzaException("Erreur le nom de la pizza est vide ");
 			}
+			
+			System.out.println("*** Catégories ***");
+			for (CategoriePizza categories : CategoriePizza.values()  ) {
+				System.out.println(categories.getValue());
+			}
+			System.out.println("Veuillez saisir la catégorie: ");
+			String categorie = scanner.nextLine();
+			categorie = upperCaseAllFirst(categorie);
+			int categoryExist = 0;
+			for (CategoriePizza categories : CategoriePizza.values()  ) {
+				if (categories.getValue().equals(categorie)) {
+					categoryExist++;
+				}
+			}
+			if(categoryExist == 0) {
+				throw new UpdatePizzaException("Erreur le code de la categorie n'est pas reconnu");
+			}
+			categorie = categorie.toUpperCase();
+			categorie.replace(' ', '_');
+			System.out.println(categorie);
 
 			System.out.println("Veuillez saisir le prix: ");
 			String prixStr = scanner.nextLine();
@@ -86,7 +106,7 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				}
 				double prix = Double.parseDouble(prixStr);
 				code = code.toUpperCase();
-				Pizza pizza = new Pizza(code, nom, prix);
+				Pizza pizza = new Pizza(code, nom, categorie,prix);
 				return this.dao.updatePizza(choice, pizza);
 			} catch (NumberFormatException e) {
 				System.out.println("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");

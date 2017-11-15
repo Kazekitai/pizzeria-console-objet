@@ -32,21 +32,21 @@ public class InitialisePizzaOptionMenu extends OptionMenu {
 	 * Method to initialize pizza table
 	 */
 	public void initializePizzeria() {
-		Pizza pep = new Pizza("PEP","Pépéroni",12.50,this.dao.getPizzas());
+		Pizza pep = new Pizza("PEP","Pépéroni","VIANDE",12.50,this.dao.getPizzas());
 		this.dao.saveNewPizza(pep);
-		Pizza mar = new Pizza("MAR","Margherita",14.00,this.dao.getPizzas());
+		Pizza mar = new Pizza("MAR","Margherita","SANS_VIANDE",14.00,this.dao.getPizzas());
 		this.dao.saveNewPizza(mar);
-		Pizza rein = new Pizza("REIN","La Reine",11.50,this.dao.getPizzas());
+		Pizza rein = new Pizza("REIN","La Reine","SANS_VIANDE",11.50,this.dao.getPizzas());
 		this.dao.saveNewPizza(rein);
-		Pizza fro = new Pizza("FRO","La 4 fromage",12.50,this.dao.getPizzas());
+		Pizza fro = new Pizza("FRO","La 4 fromage","VIANDE",12.50,this.dao.getPizzas());
 		this.dao.saveNewPizza(fro);
-		Pizza can = new Pizza("CAN","La Cannibale",12.50,this.dao.getPizzas());
+		Pizza can = new Pizza("CAN","La Cannibale","VIANDE",12.50,this.dao.getPizzas());
 		this.dao.saveNewPizza(can);
-		Pizza sav = new Pizza("SAV","La Savoyarde",13.00,this.dao.getPizzas());
+		Pizza sav = new Pizza("SAV","La Savoyarde","VIANDE",13.00,this.dao.getPizzas());
 		this.dao.saveNewPizza(sav);
-		Pizza ori = new Pizza("ORI","L'Orientale",13.50,this.dao.getPizzas());
+		Pizza ori = new Pizza("ORI","L'Orientale","VIANDE",13.50,this.dao.getPizzas());
 		this.dao.saveNewPizza(ori);
-		Pizza ind = new Pizza("IND","L'Indienne",14.00,this.dao.getPizzas());
+		Pizza ind = new Pizza("IND","L'Indienne","VIANDE",14.00,this.dao.getPizzas());
 		this.dao.saveNewPizza(ind);
 		
 	}

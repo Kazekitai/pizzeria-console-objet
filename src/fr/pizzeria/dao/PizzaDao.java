@@ -42,6 +42,7 @@ public class PizzaDao implements IPizzaDao {
 			if(this.getPizzas().get(i).getCode().equals(codePizza)) {
 				this.getPizzas().get(i).setCode(pizza.getCode());
 				this.getPizzas().get(i).setNom(pizza.getNom());
+				this.getPizzas().get(i).setCategoriePizza(pizza.getCategoriePizza());
 				this.getPizzas().get(i).setPrix(pizza.getPrix());
 			}
 		}
@@ -63,12 +64,21 @@ public class PizzaDao implements IPizzaDao {
 	}
 	
 	/* GETTERS AND SETTERS */
+	/**
+	 * Getter for pizzas
+	 * @return the pizzas
+	 */
 	public ArrayList<Pizza> getPizzas() {
 		return pizzas;
 	}
 
+	/**
+	 * Setters for pizzas
+	 * @param pizzas the pizzas to set
+	 */
 	public void setPizzas(ArrayList<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
+
 
 }
