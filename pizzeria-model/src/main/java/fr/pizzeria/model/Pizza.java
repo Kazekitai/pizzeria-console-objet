@@ -2,7 +2,6 @@ package fr.pizzeria.model;
 
 import java.util.ArrayList;
 
-import fr.pizzeria.console.PizerriaAdminConsoleApp;
 
 public class Pizza {
 	/* ATTRIBUTES */
@@ -57,15 +56,6 @@ public class Pizza {
 			j++;
 		}
 		this.id = j;
-	}
-
-	/* METHODS */
-	/**
-	 * Method to display list of pizza
-	 */
-	public void displayPizzaString() {
-		PizerriaAdminConsoleApp.getLog().trace(this.getCode() + " -> " + this.getNom() + " - "
-				+ this.categoriePizza.getValue() + " (" + this.getPrix() + " €)");
 	}
 
 	/**
