@@ -732,3 +732,58 @@ Liste des pizzas (8 pizza)
 				99 pour abandonner
 15:31:40.004 [main] TRACE logger1 -
 				Veuillez choisir la pizza à modifier (saisir le code) : 
+15:32:55.131 [main] TRACE logger1 -
+				
+***** Pizzeria Administration *****
+15:32:55.131 [main] TRACE logger1 -
+				1. Lister les pizzas
+15:32:55.131 [main] TRACE logger1 -
+				2. Ajouter une pizza
+15:32:55.131 [main] TRACE logger1 -
+				3. Mettre à jour une pizza
+15:32:55.131 [main] TRACE logger1 -
+				4. Supprimer une pizza
+15:32:55.131 [main] TRACE logger1 -
+				99. Sortir.
+15:32:55.131 [main] TRACE logger1 -
+				Quelle action voulez-vous effectuer?
+15:32:57.340 [main] TRACE logger1 -
+				
+Liste des pizzas (8 pizza)
+
+15:32:57.356 [main] TRACE logger1 -
+				PEP -> Pépéroni 12.5 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				MAR -> Margherita 14.0 � - SANS_VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				REI -> La Reine 11.5 � - SANS_VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				FRO -> La 4 fromage 12.5 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				CAN -> La Cannibale 12.5 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				SAV -> La Savoyarde 13.0 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				ORI -> L'Orientale 13.5 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				IND -> L'Indienne 14.0 � - VIANDE 
+15:32:57.356 [main] TRACE logger1 -
+				
+***** Pizzeria Administration *****
+15:32:57.356 [main] TRACE logger1 -
+				1. Lister les pizzas
+15:32:57.356 [main] TRACE logger1 -
+				2. Ajouter une pizza
+15:32:57.356 [main] TRACE logger1 -
+				3. Mettre à jour une pizza
+15:32:57.356 [main] TRACE logger1 -
+				4. Supprimer une pizza
+15:32:57.356 [main] TRACE logger1 -
+				99. Sortir.
+15:32:57.356 [main] TRACE logger1 -
+				Quelle action voulez-vous effectuer?
+15:32:58.665 [main] TRACE logger1 -
+				
+Ajout d'une nouvelle pizza
+15:32:58.675 [main] TRACE logger1 -
+				Veuillez saisir le code: 
