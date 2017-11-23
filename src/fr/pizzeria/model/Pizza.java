@@ -2,14 +2,16 @@ package fr.pizzeria.model;
 
 import java.util.ArrayList;
 
+import fr.pizzeria.console.PizerriaAdminConsoleApp;
+
 public class Pizza {
 	/* ATTRIBUTES */
 	private int id;
-	@ToString(separator=" -> ",uppercase=true)
+	@ToString(separator = " -> ", uppercase = true)
 	private String code;
-	@ToString(uppercase=true)
+	@ToString(uppercase = true)
 	private String nom;
-	@ToString(separator=" € - ")
+	@ToString(separator = " ï¿½ - ")
 	private double prix;
 	@ToString
 	private CategoriePizza categoriePizza;
@@ -62,8 +64,8 @@ public class Pizza {
 	 * Method to display list of pizza
 	 */
 	public void displayPizzaString() {
-		System.out.println(this.getCode() + " -> " + this.getNom() + " - " + this.categoriePizza.getValue() + " ("
-				+ this.getPrix() + " €)");
+		PizerriaAdminConsoleApp.getLog().trace(this.getCode() + " -> " + this.getNom() + " - "
+				+ this.categoriePizza.getValue() + " (" + this.getPrix() + " â‚¬)");
 	}
 
 	/**

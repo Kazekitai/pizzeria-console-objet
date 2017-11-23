@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import fr.pizzeria.console.PizerriaAdminConsoleApp;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.CategoriePizza;
@@ -30,19 +31,17 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	 * @return
 	 */
 	public String getLabel() {
-		return "Mettre à jour une pizza";
+		return "Mettre Ã  jour une pizza";
 	}
 
 	/**
 	 * Display menu 3 to update pizza
 	 */
 	public boolean displayMenu3() throws UpdatePizzaException {
-		System.out.println("\nMise à jour d'une pizza");
-		System.out.println("\nMise à jour d'une pizza");
-		System.out.println("\nPizzas size: " + this.dao.getPizzas().size());
-		displayPizzaList(dao);
-		System.out.println("99 pour abandonner");
-		System.out.println("Veuillez choisir la pizza à modifier (saisir le code) : ");
+		PizerriaAdminConsoleApp.getLog().trace("\nMise Ã  jour d'une pizza");
+		super.displayPizzaList(dao);
+		PizerriaAdminConsoleApp.getLog().trace("99 pour abandonner");
+		PizerriaAdminConsoleApp.getLog().trace("Veuillez choisir la pizza Ã  modifier (saisir le code) : ");
 		String choice = scanner.nextLine();
 		
 		if (!choice.equals("99")) {
@@ -54,30 +53,34 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				}
 			}
 			if(exist == 0) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza n'est pas reconnu");
 				throw new UpdatePizzaException("Erreur le code de la pizza n'est pas reconnu");
 			}
-			System.out.println("Veuillez saisir le code: ");
+			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le code: ");
 			String code = scanner.nextLine();
 			if (code.isEmpty()) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza est vide");
 				throw new UpdatePizzaException("Erreur le code de la pizza est vide");
 			}
 
 			if (code.length() != 3) {
-				throw new UpdatePizzaException("Erreur le nombre de caractères du code de la pizza est différent 3");
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le nombre de caractï¿½res du code de la pizza est diffï¿½rent 3");
+				throw new UpdatePizzaException("Erreur le nombre de caractï¿½res du code de la pizza est diffï¿½rent 3");
 			}
 
-			System.out.println("Veuillez saisir le nom: ");
+			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le nom: ");
 			String nom = scanner.nextLine();
 
 			if (nom.isEmpty()) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le nom de la pizza est vide ");
 				throw new UpdatePizzaException("Erreur le nom de la pizza est vide ");
 			}
 			
-			System.out.println("*** Catégories ***");
+			PizerriaAdminConsoleApp.getLog().trace("*** CatÃ©gories ***");
 			for (CategoriePizza categories : CategoriePizza.values()  ) {
-				System.out.println(categories.getValue());
+				PizerriaAdminConsoleApp.getLog().trace(categories.getValue());
 			}
-			System.out.println("Veuillez saisir la catégorie: ");
+			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir la catÃ©gorie: ");
 			String categorie = scanner.nextLine();
 			categorie = upperCaseAllFirst(categorie);
 			int categoryExist = 0;
@@ -87,29 +90,32 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				}
 			}
 			if(categoryExist == 0) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la categorie n'est pas reconnu");
 				throw new UpdatePizzaException("Erreur le code de la categorie n'est pas reconnu");
 			}
 			categorie = categorie.toUpperCase();
 			categorie.replace(' ', '_');
-			System.out.println(categorie);
+			PizerriaAdminConsoleApp.getLog().trace(categorie);
 
-			System.out.println("Veuillez saisir le prix: ");
+			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le prix: ");
 			String prixStr = scanner.nextLine();
 
 			if (prixStr.isEmpty()) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix de la pizza est vide");
 				throw new UpdatePizzaException("Erreur le prix de la pizza est vide");
 			}
 			
 			try {
 				if (Double.parseDouble(prixStr) < 0) {
-					throw new UpdatePizzaException("Erreur le prix ne peux pas être négatif");
+					PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
+					throw new UpdatePizzaException("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
 				}
 				double prix = Double.parseDouble(prixStr);
 				code = code.toUpperCase();
 				Pizza pizza = new Pizza(code, nom, categorie,prix);
 				return this.dao.updatePizza(choice, pizza);
 			} catch (NumberFormatException e) {
-				System.out.println("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu Ãªtre ajoutÃ©e");
 				return false;
 			}
 			

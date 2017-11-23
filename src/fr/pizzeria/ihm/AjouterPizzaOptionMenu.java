@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import fr.pizzeria.console.PizerriaAdminConsoleApp;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.SavePizzaException;
 import fr.pizzeria.model.CategoriePizza;
@@ -37,30 +38,34 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 	 * Display menu 2 to add pizza
 	 */
 	public boolean displayMenu2() throws SavePizzaException {
-		System.out.println("\nAjout d'une nouvelle pizza");
-		System.out.println("Veuillez saisir le code: ");
+		PizerriaAdminConsoleApp.getLog().trace("\nAjout d'une nouvelle pizza");
+		PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le code: ");
 		String code = scanner.nextLine();
-		System.out.println("code: " + code);
 		if (code.isEmpty()) {
-			throw new SavePizzaException("Erreur le code de la pizza est vide");	
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza est vide");
+			throw new SavePizzaException("Erreur le code de la pizza est vide");
+			
 		} 
 		
 		if (code.length() != 3) {
-			throw new SavePizzaException("Erreur le nombre de caractËres du code de la pizza est diffÈrent 3");
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le nombre de caract√®res du code de la pizza est diff√©rent de 3");
+			throw new SavePizzaException("Erreur le nombre de caract√®res du code de la pizza est diff√©rent de 3");
 		} 
 		
-		System.out.println("Veuillez saisir le nom: ");
+		PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le nom: \"");
 		String nom = scanner.nextLine();
 		
 		if (nom.isEmpty()) {
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le nom de la pizza est vide ");
 			throw new SavePizzaException("Erreur le nom de la pizza est vide ");
 		} 
 		
-		System.out.println("*** CatÈgories ***");
+		PizerriaAdminConsoleApp.getLog().trace("*** Cat√©gories ***");
 		for (CategoriePizza categories : CategoriePizza.values()  ) {
 			System.out.println(categories.getValue());
+			PizerriaAdminConsoleApp.getLog().info(categories.getValue());
 		}
-		System.out.println("Veuillez saisir la catÈgorie: ");
+		PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir la cat√©gorie: ");
 		String categorie = scanner.nextLine();
 		categorie = upperCaseAllFirst(categorie);
 		int exist = 0;
@@ -70,32 +75,37 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 			}
 		}
 		if(exist == 0) {
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la categorie n'est pas reconnu");
 			throw new SavePizzaException("Erreur le code de la categorie n'est pas reconnu");
 		}
 		categorie = categorie.toUpperCase();
 		categorie.replace(' ', '_');
 		
 		if (nom.isEmpty()) {
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le nom de la pizza n'est pas reconnu ");
 			throw new SavePizzaException("Erreur le nom de la pizza n'est pas reconnu ");
 		}
 		
-		System.out.println("Veuillez saisir le prix: ");
+		PizerriaAdminConsoleApp.getLogfull().trace("Veuillez saisir le prix: ");
 		String prixStr = scanner.nextLine();
 		
 		if (prixStr.isEmpty()) {
+			PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix de la pizza est vide");
 			throw new SavePizzaException("Erreur le prix de la pizza est vide");
 		} 
 		
 		try {
 				if (Double.parseDouble(prixStr) < 0) {
-					throw new SavePizzaException("Erreur le prix ne peux pas Ítre nÈgatif");
+					PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix ne peux pas √™tre n√©gatif");
+					throw new SavePizzaException("Erreur le prix ne peux pas √™tre n√©gatif");
 				} 
 				double prix = Double.parseDouble(prixStr);
 			 	code = code.toUpperCase();
 				Pizza pizza = new Pizza(code, nom, categorie, prix, this.dao.getPizzas());
 				return this.dao.saveNewPizza(pizza);		
 			} catch (NumberFormatException  e) {
-				System.out.println("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu Ítre ajoutÈe");
+				PizerriaAdminConsoleApp.getLogfull().error("Le prix n'est pas un nombre. La pizza n'a pas pu tre ajout√©e");
+				System.out.println("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu tre ajout√©e");
 				return false;
 			}
 	}

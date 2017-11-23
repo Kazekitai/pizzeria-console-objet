@@ -3,6 +3,7 @@ package fr.pizzeria.ihm;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import fr.pizzeria.console.PizerriaAdminConsoleApp;
 import fr.pizzeria.dao.PizzaDao;
 import fr.pizzeria.exception.StockageException;
 
@@ -66,10 +67,10 @@ public class Menu {
 				}
 				break;
 			case 99:
-				System.out.println("\nAurevoir " + ":(");
+				PizerriaAdminConsoleApp.getLog().trace("\nAu revoir " + ":(");
 				break;
 			default:
-				System.out.println("\nCette option n'existe pas!");
+				PizerriaAdminConsoleApp.getLog().trace("\nCette option n'existe pas!");
 				break;
 			}
 		}
@@ -80,14 +81,14 @@ public class Menu {
 	 * Method to display Pizzeria menu for administrator
 	 */
 	public void displayMenu() {
-		System.out.println("\n" + this.title);
-		for (int i = 0; i < optionMenus.size() - 1; i++) {
+		PizerriaAdminConsoleApp.getLog().trace("\n" + this.title);
+		for (int i = 0; i < optionMenus.size() ; i++) {
 			if (optionMenus.get(i) != null) {
-				System.out.println((i + 1) + ". " + optionMenus.get(i).getLabel());
+				PizerriaAdminConsoleApp.getLog().trace((i + 1) + ". " + optionMenus.get(i).getLabel());
 			}
 		}
-		System.out.println("99. Sortir.");
-		System.out.println("Quelle action voulez-vous effectuer?");
+		PizerriaAdminConsoleApp.getLog().trace("99. Sortir.");
+		PizerriaAdminConsoleApp.getLog().trace("Quelle action voulez-vous effectuer?");
 	}
 
 	/* GETTER */

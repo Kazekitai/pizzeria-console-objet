@@ -1,5 +1,6 @@
 package fr.pizzeria.ihm;
 
+import fr.pizzeria.console.PizerriaAdminConsoleApp;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
 
@@ -36,10 +37,10 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	 * @throws DeletePizzaException 
 	 */
 	public boolean displayMenu4() throws DeletePizzaException {
-		System.out.println("\nSupression d'une pizza");
-		displayPizzaList(dao);
-		System.out.println("99 pour abandonner");
-		System.out.println("Veuillez choisir la pizza à supprimer (saisir le code) : ");
+		PizerriaAdminConsoleApp.getLog().trace("\nSupression d'une pizza");
+		super.displayPizzaList(dao);
+		PizerriaAdminConsoleApp.getLog().trace("99 pour abandonner");
+		PizerriaAdminConsoleApp.getLog().trace("Veuillez choisir la pizza Ã  supprimer (saisir le code) : ");
 		String choice = scanner.nextLine();
 		if (!choice.equals("99")) {
 			choice = choice.toUpperCase();
@@ -50,6 +51,7 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 				}
 			}
 			if(exist == 0) {
+				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza n'est pas reconnu");
 				throw new DeletePizzaException("Erreur le code de la pizza n'est pas reconnu");
 			}
 			return dao.deletePizza(choice);

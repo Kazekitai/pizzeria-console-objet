@@ -14,7 +14,7 @@ public class PizzaDao implements IPizzaDao {
 	 */
 	public PizzaDao() {
 		/* Initialization of pizza list */
-		pizzas.add(new Pizza("PEP","Pépéroni","VIANDE",12.50,getPizzas()));
+		pizzas.add(new Pizza("PEP","PÃ©pÃ©roni","VIANDE",12.50,getPizzas()));
 		pizzas.add(new Pizza("MAR","Margherita","SANS_VIANDE",14.00,getPizzas()));
 		pizzas.add(new Pizza("REI","La Reine","SANS_VIANDE",11.50,getPizzas()));
 		pizzas.add(new Pizza("FRO","La 4 fromage","VIANDE",12.50,getPizzas()));
