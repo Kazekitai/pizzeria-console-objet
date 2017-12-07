@@ -3,6 +3,11 @@ package fr.pizzeria.dao;
 import java.util.ArrayList;
 import fr.pizzeria.model.Pizza;
 
+/**
+ * Dao Class to manipulate data from array
+ * @author Sandra Le Thiec
+ *
+ */
 public class PizzaDao implements IPizzaDao {
 	/* ATTRIBUTES */
 	private ArrayList<Pizza> pizzas = new ArrayList<Pizza>();

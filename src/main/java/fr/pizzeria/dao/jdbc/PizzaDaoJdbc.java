@@ -4,37 +4,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.runtime.StopApplicationException;
 import fr.pizzeria.model.Pizza;
 
+/**
+ *Dao Class to manipulate data from database
+ * 
+ * @author Sandra Le Thiec
+ *
+ */
 public class PizzaDaoJdbc implements IPizzaDao {
 	/* ATTRIBUTES */
-	private final Logger LOGGER = LoggerFactory.getLogger("logger2"); 
+	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
 
 	/* CONSTRUCTOR */
 	/**
 	 * Constructor PizzaDaoJdbc
 	 */
 	public PizzaDaoJdbc() {
-		/* Initialization of pizza list */
-		// this.saveNewPizza(new Pizza("PEP","Pépéroni","VIANDE",12.50));
-		// this.saveNewPizza(new Pizza("MAR","Margherita","SANS_VIANDE",14.00));
-		// this.saveNewPizza(new Pizza("REI","La Reine","SANS_VIANDE",11.50));
-		// this.saveNewPizza(new Pizza("FRO","La 4 fromage","VIANDE",12.50));
-		// this.saveNewPizza(new Pizza("CAN","La Cannibale","VIANDE",12.50));
-		// this.saveNewPizza(new Pizza("SAV","La Savoyarde","VIANDE",13.00));
-		// this.saveNewPizza(new Pizza("ORI","L'Orientale","VIANDE",13.50));
-		// this.saveNewPizza(new Pizza("IND","L'Indienne","VIANDE",14.00));
 	}
 
 	/* METHODS */
 
-	
 	/**
 	 * Find all pizza
 	 */
@@ -60,19 +54,18 @@ public class PizzaDaoJdbc implements IPizzaDao {
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 			throw new StopApplicationException(e.getMessage());
-		}
-		finally {
-			if(resultats != null) {
+		} finally {
+			if (selectPizzaSt != null) {
 				try {
-					DbManager.getInstance().getConnection().close();
+					selectPizzaSt.close();
 				} catch (SQLException e) {
 					LOGGER.error(e.getMessage());
 					throw new StopApplicationException(e.getMessage());
 				}
 			}
-			if(selectPizzaSt != null) {
+			if (resultats != null) {
 				try {
-					selectPizzaSt.close();
+					DbManager.getInstance().getConnection().close();
 				} catch (SQLException e) {
 					LOGGER.error(e.getMessage());
 					throw new StopApplicationException(e.getMessage());
@@ -88,16 +81,18 @@ public class PizzaDaoJdbc implements IPizzaDao {
 	 */
 	@Override
 	public boolean saveNewPizza(Pizza pizza) {
+		PreparedStatement prepStat = null;
+		int resultat = 0;
 		try {
 			if (doesPizzaExist(pizza.getCode()) == false) {
 				DbManager.getInstance().openDbConnection();
 				String insertQuery = "INSERT INTO pizza (CODE,NOM,CATEGORIE,PRIX) VALUES(?,?,?,?)";
-				PreparedStatement prepStat = DbManager.getInstance().getConnection().prepareStatement(insertQuery);
+				prepStat = DbManager.getInstance().getConnection().prepareStatement(insertQuery);
 				prepStat.setString(1, pizza.getCode());
 				prepStat.setString(2, pizza.getNom());
 				prepStat.setString(3, pizza.getCategoriePizza().getValue());
 				prepStat.setDouble(4, pizza.getPrix());
-				prepStat.executeUpdate();
+				resultat = prepStat.executeUpdate();
 
 				prepStat.close();
 				DbManager.getInstance().getConnection().close();
@@ -109,6 +104,24 @@ public class PizzaDaoJdbc implements IPizzaDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (prepStat != null) {
+				try {
+					prepStat.close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
+			if (resultat != 0) {
+				try {
+					DbManager.getInstance().getConnection().close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
+
 		}
 		return false;
 	}
@@ -121,17 +134,19 @@ public class PizzaDaoJdbc implements IPizzaDao {
 	 */
 	@Override
 	public boolean updatePizza(String codePizza, Pizza pizza) {
+		PreparedStatement prepStat = null;
+		int resultat = 0;
 		try {
 			if (doesPizzaExist(codePizza) == true) {
 				DbManager.getInstance().openDbConnection();
 				String updateQuery = "UPDATE pizza SET CODE=?, NOM=?, CATEGORIE=?, PRIX=? WHERE CODE=?";
-				PreparedStatement prepStat = DbManager.getInstance().getConnection().prepareStatement(updateQuery);
+				prepStat = DbManager.getInstance().getConnection().prepareStatement(updateQuery);
 				prepStat.setString(1, pizza.getCode());
 				prepStat.setString(2, pizza.getNom());
 				prepStat.setString(3, pizza.getCategoriePizza().getValue());
 				prepStat.setDouble(4, pizza.getPrix());
 				prepStat.setString(5, codePizza);
-				prepStat.executeUpdate();
+				resultat = prepStat.executeUpdate();
 
 				prepStat.close();
 				DbManager.getInstance().getConnection().close();
@@ -143,24 +158,44 @@ public class PizzaDaoJdbc implements IPizzaDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (prepStat != null) {
+				try {
+					prepStat.close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
+			if (resultat != 0) {
+				try {
+					DbManager.getInstance().getConnection().close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
+
 		}
 		return false;
 	}
 
 	/**
 	 * Delete pizza into table by pizza code
+	 * 
 	 * @param codePizza
 	 */
 	@Override
 	public boolean deletePizza(String codePizza) {
+		PreparedStatement prepStat = null;
+		int resultat = 0;
 		try {
 			if (doesPizzaExist(codePizza) == true) {
 				DbManager.getInstance().openDbConnection();
 				String deleteQuery = "DELETE FROM pizza WHERE CODE=?";
-				PreparedStatement prepStat = DbManager.getInstance().getConnection().prepareStatement(deleteQuery);
+				prepStat = DbManager.getInstance().getConnection().prepareStatement(deleteQuery);
 				prepStat.setString(1, codePizza);
-				prepStat.executeUpdate();
-
+				resultat = prepStat.executeUpdate();
 				prepStat.close();
 				DbManager.getInstance().getConnection().close();
 			} else {
@@ -171,13 +206,30 @@ public class PizzaDaoJdbc implements IPizzaDao {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (prepStat != null) {
+				try {
+					prepStat.close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
+			if (resultat != 0) {
+				try {
+					DbManager.getInstance().getConnection().close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
 		}
 		return false;
 	}
 
-	
 	/**
 	 * Test if pizza exist
+	 * 
 	 * @param codePizza
 	 * @return
 	 */

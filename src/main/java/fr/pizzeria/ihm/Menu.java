@@ -7,6 +7,11 @@ import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.jdbc.PizzaDaoJdbc;
 import fr.pizzeria.exception.StockageException;
 
+/**
+ * Class Menu from Pizzeria application
+ * @author Sandra Le Thiec
+ *
+ */
 public class Menu {
 	/* ATTRIBUTES */
 	private Scanner scanner = new Scanner(System.in);
@@ -22,6 +27,9 @@ public class Menu {
 	private static final int DELETE_PIZZA = 3;
 
 	/* CONSTRUCTOR */
+	/**
+	 * Constructor
+	 */
 	public Menu() {
 		title = "***** Pizzeria Administration *****";
 		optionMenus.put(DISPLAY_PIZZA, new ListerPizzasOptionMenu(dao));

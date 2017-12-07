@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import fr.pizzeria.exception.runtime.StopApplicationException;
 
+/**
+ * Class to connect application with database
+ * 
+ * @author Sandra Le Thiec
+ *
+ */
 public class DbManager {
 	/* ATTRIBUTES */
 	private Connection connection = null;
@@ -14,25 +19,32 @@ public class DbManager {
 	private String url;
 	private String user;
 	private String password;
-	
+
+	/* CONSTRUCTOR */
+	/**
+	 * private constructor
+	 */
 	private DbManager() {
-		
+
 	}
-	
+
+	/**
+	 * 
+	 * @return instance of this class
+	 */
 	public static synchronized DbManager getInstance() {
-		if(singleton == null) {
+		if (singleton == null) {
 			synchronized (DbManager.class) {
 				singleton = new DbManager();
 			}
 		}
 		return singleton;
 	}
-	
+
 	/**
 	 * Connexion à la base de données
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
 	public void openDbConnection() {
 		/*
@@ -45,11 +57,11 @@ public class DbManager {
 		} catch (ClassNotFoundException e) {
 			throw new StopApplicationException(e.getMessage());
 		}
-		
+
 		this.url = bundle.getString("pizzeria.url");
 		this.user = bundle.getString("pizzeria.user");
 		this.password = bundle.getString("pizerria.password");
-		
+
 		// Tester si connection ouverte
 		Connection conn;
 		try {
@@ -71,7 +83,8 @@ public class DbManager {
 	}
 
 	/**
-	 * @param connection the connection to set
+	 * @param connection
+	 *            the connection to set
 	 */
 	public void setConnection(Connection connection) {
 		this.connection = connection;
@@ -85,7 +98,8 @@ public class DbManager {
 	}
 
 	/**
-	 * @param url the url to set
+	 * @param url
+	 *            the url to set
 	 */
 	public void setUrl(String url) {
 		this.url = url;
@@ -99,7 +113,8 @@ public class DbManager {
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(String user) {
 		this.user = user;
@@ -113,11 +128,11 @@ public class DbManager {
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 }

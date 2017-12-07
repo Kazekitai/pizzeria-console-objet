@@ -2,7 +2,17 @@ package fr.pizzeria.model;
 
 import java.lang.reflect.Field;
 
+/**
+ * Class to manipulate String
+ * @author Sandra Le Thiec
+ *
+ */
 public class StringUtils {
+	/**
+	 * Method to get a String from Object
+	 * @param obj
+	 * @return
+	 */
 	static String getStringValue(Object obj) {
 		String str = "";
 		Field[] fields = obj.getClass().getDeclaredFields();

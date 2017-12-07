@@ -2,11 +2,21 @@ package fr.pizzeria.ihm;
 
 import fr.pizzeria.dao.IPizzaDao;
 
+/**
+ * Class to display pizza list
+ * @author Sandra Le Thiec
+ *
+ */
 public class ListerPizzasOptionMenu extends OptionMenu {
 	/* ATTRIBUTES */
 	IPizzaDao dao;
 
 	/* CONSTRUCTOR */
+	/**
+	 * Constructor with one parameter
+	 * 
+	 * @param dao
+	 */
 	public ListerPizzasOptionMenu(IPizzaDao dao) {
 		super();
 		this.dao = dao;
@@ -36,6 +46,5 @@ public class ListerPizzasOptionMenu extends OptionMenu {
 	public boolean displayMenu1() {
 		return super.displayPizzaList(dao);
 	}
-
 
 }

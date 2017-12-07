@@ -7,10 +7,19 @@ import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
+/**
+ * Abstract class for options of application menu 
+ * @author Sandra Le Thiec
+ *
+ */
 public abstract class OptionMenu {
 	/* ATTRIBUTES */
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
+	/* CONSTRUCTOR */
+	/**
+	 * Default constructor
+	 */
 	public OptionMenu() {
 	}
 

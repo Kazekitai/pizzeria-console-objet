@@ -6,6 +6,11 @@ import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
 
+/**
+ * Class to delete pizza
+ * @author Sandra Le Thiec
+ *
+ */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
 	/* ATTRIBUTES */
 	IPizzaDao dao;
@@ -14,6 +19,10 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
 	/* CONSTRUCTOR */
+	/**
+	 * Constructor with one parameter
+	 * @param dao
+	 */
 	public SupprimerPizzaOptionMenu(IPizzaDao dao) {
 		super();
 		this.dao = dao;

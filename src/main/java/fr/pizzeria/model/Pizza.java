@@ -2,6 +2,12 @@ package fr.pizzeria.model;
 
 import java.util.ArrayList;
 
+/**
+ * Class Pizza
+ * 
+ * @author Sandra Le Thiec
+ *
+ */
 public class Pizza {
 	/* ATTRIBUTES */
 	private int id;
@@ -33,7 +39,7 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-//		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+		// this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
 		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 	}
 
@@ -50,7 +56,7 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-//		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+		// this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
 		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 		int j = 0;
 		for (int i = 0; i < pizzas.size(); i++) {
@@ -61,7 +67,6 @@ public class Pizza {
 
 	/* METHODS */
 
-
 	/**
 	 * Method to return String value of Pizza object
 	 */
@@ -69,16 +74,12 @@ public class Pizza {
 		return StringUtils.getStringValue(this);
 	}
 
-	public CategoriePizza getCategory(String value) {
-		CategoriePizza categorie = null;
-		switch (value) {
-		case "VIANDE":
-			categorie = CategoriePizza.VIANDE;
-			break;
-		}
-		return categorie;
-	}
-	
+	/**
+	 * Method to get key of category
+	 * 
+	 * @param value
+	 * @return categorie String
+	 */
 	public String getCategoryKey(String value) {
 		String categorie = null;
 		switch (value) {
