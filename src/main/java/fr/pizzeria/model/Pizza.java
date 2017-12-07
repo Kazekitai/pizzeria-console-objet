@@ -33,7 +33,8 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+//		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 	}
 
 	/**
@@ -49,7 +50,8 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+//		this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
+		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 		int j = 0;
 		for (int i = 0; i < pizzas.size(); i++) {
 			j++;
@@ -72,6 +74,22 @@ public class Pizza {
 		switch (value) {
 		case "VIANDE":
 			categorie = CategoriePizza.VIANDE;
+			break;
+		}
+		return categorie;
+	}
+	
+	public String getCategoryKey(String value) {
+		String categorie = null;
+		switch (value) {
+		case "Viande":
+			categorie = "VIANDE";
+			break;
+		case "Sans Viande":
+			categorie = "SANS_VIANDE";
+			break;
+		case "Poisson":
+			categorie = "POISSON";
 			break;
 		}
 		return categorie;

@@ -1,13 +1,20 @@
 package fr.pizzeria.ihm;
 
-import fr.pizzeria.console.PizerriaAdminConsoleApp;
+import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.UpdatePizzaException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 public class ModifierPizzaOptionMenu extends OptionMenu {
+	/* ATTRIBUTES */
 	IPizzaDao dao;
+	Scanner scanner = new Scanner(System.in);
+	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
+	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
 	/* CONSTRUCTOR */
 	public ModifierPizzaOptionMenu(IPizzaDao dao) {
@@ -38,49 +45,44 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	 * Display menu 3 to update pizza
 	 */
 	public boolean displayMenu3() throws UpdatePizzaException {
-		PizerriaAdminConsoleApp.getLog().trace("\nMise à jour d'une pizza");
+		LOGINFO.trace("\nMise à jour d'une pizza");
 		super.displayPizzaList(dao);
-		PizerriaAdminConsoleApp.getLog().trace("99 pour abandonner");
-		PizerriaAdminConsoleApp.getLog().trace("Veuillez choisir la pizza à modifier (saisir le code) : ");
+		LOGINFO.trace("99 pour abandonner");
+		LOGINFO.trace("Veuillez choisir la pizza à modifier (saisir le code) : ");
 		String choice = scanner.nextLine();
 		
 		if (!choice.equals("99")) {
 			choice = choice.toUpperCase();
-			int exist = 0;
-			for (int i = 0; i < dao.getPizzas().size(); i++) {
-				if (dao.getPizzas().get(i).getCode().equals(choice)) {
-					exist++;
-				}
-			}
-			if(exist == 0) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza n'est pas reconnu");
+			if(dao.doesPizzaExist(choice) == false) {
+				LOGGER.error("Erreur le code de la pizza n'est pas reconnu");
 				throw new UpdatePizzaException("Erreur le code de la pizza n'est pas reconnu");
 			}
-			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le code: ");
+			
+			LOGINFO.trace("Veuillez saisir le code: ");
 			String code = scanner.nextLine();
 			if (code.isEmpty()) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza est vide");
+				LOGGER.error("Erreur le code de la pizza est vide");
 				throw new UpdatePizzaException("Erreur le code de la pizza est vide");
 			}
 
 			if (code.length() != 3) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le nombre de caract�res du code de la pizza est diff�rent 3");
-				throw new UpdatePizzaException("Erreur le nombre de caract�res du code de la pizza est diff�rent 3");
+				LOGGER.error("Erreur le nombre de caractères du code de la pizza est diff�rent 3");
+				throw new UpdatePizzaException("Erreur le nombre de caractères du code de la pizza est diff�rent 3");
 			}
 
-			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le nom: ");
+			LOGINFO.trace("Veuillez saisir le nom: ");
 			String nom = scanner.nextLine();
 
 			if (nom.isEmpty()) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le nom de la pizza est vide ");
+				LOGGER.error("Erreur le nom de la pizza est vide ");
 				throw new UpdatePizzaException("Erreur le nom de la pizza est vide ");
 			}
 			
-			PizerriaAdminConsoleApp.getLog().trace("*** Catégories ***");
+			LOGINFO.trace("*** Catégories ***");
 			for (CategoriePizza categories : CategoriePizza.values()  ) {
-				PizerriaAdminConsoleApp.getLog().trace(categories.getValue());
+				LOGINFO.trace(categories.getValue());
 			}
-			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir la catégorie: ");
+			LOGINFO.trace("Veuillez saisir la catégorie: ");
 			String categorie = scanner.nextLine();
 			categorie = upperCaseAllFirst(categorie);
 			int categoryExist = 0;
@@ -90,32 +92,33 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				}
 			}
 			if(categoryExist == 0) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la categorie n'est pas reconnu");
+				LOGGER.error("Erreur le code de la categorie n'est pas reconnu");
 				throw new UpdatePizzaException("Erreur le code de la categorie n'est pas reconnu");
 			}
 			categorie = categorie.toUpperCase();
 			categorie.replace(' ', '_');
-			PizerriaAdminConsoleApp.getLog().trace(categorie);
+			String categoryValue = CategoriePizza.valueOf(categorie).getValue();
+//			PizerriaAdminConsoleApp.getLog().trace(categorie);
 
-			PizerriaAdminConsoleApp.getLog().trace("Veuillez saisir le prix: ");
+			LOGINFO.trace("Veuillez saisir le prix: ");
 			String prixStr = scanner.nextLine();
 
 			if (prixStr.isEmpty()) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix de la pizza est vide");
+				LOGGER.error("Erreur le prix de la pizza est vide");
 				throw new UpdatePizzaException("Erreur le prix de la pizza est vide");
 			}
 			
 			try {
 				if (Double.parseDouble(prixStr) < 0) {
-					PizerriaAdminConsoleApp.getLogfull().error("Erreur le prix ne peux pas être négatif");
+					LOGGER.error("Erreur le prix ne peux pas être négatif");
 					throw new UpdatePizzaException("Erreur le prix ne peux pas être négatif");
 				}
 				double prix = Double.parseDouble(prixStr);
 				code = code.toUpperCase();
-				Pizza pizza = new Pizza(code, nom, categorie,prix);
+				Pizza pizza = new Pizza(code, nom, categoryValue,prix);
 				return this.dao.updatePizza(choice, pizza);
 			} catch (NumberFormatException e) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
+				LOGGER.error("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
 				return false;
 			}
 			

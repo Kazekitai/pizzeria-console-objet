@@ -1,11 +1,17 @@
 package fr.pizzeria.ihm;
 
-import fr.pizzeria.console.PizerriaAdminConsoleApp;
+import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.DeletePizzaException;
 
 public class SupprimerPizzaOptionMenu extends OptionMenu {
+	/* ATTRIBUTES */
 	IPizzaDao dao;
+	Scanner scanner = new Scanner(System.in);
+	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
+	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
 	/* CONSTRUCTOR */
 	public SupprimerPizzaOptionMenu(IPizzaDao dao) {
@@ -37,21 +43,15 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 	 * @throws DeletePizzaException 
 	 */
 	public boolean displayMenu4() throws DeletePizzaException {
-		PizerriaAdminConsoleApp.getLog().trace("\nSupression d'une pizza");
+		LOGINFO.trace("\nSupression d'une pizza");
 		super.displayPizzaList(dao);
-		PizerriaAdminConsoleApp.getLog().trace("99 pour abandonner");
-		PizerriaAdminConsoleApp.getLog().trace("Veuillez choisir la pizza à supprimer (saisir le code) : ");
+		LOGINFO.trace("99 pour abandonner");
+		LOGINFO.trace("Veuillez choisir la pizza à supprimer (saisir le code) : ");
 		String choice = scanner.nextLine();
 		if (!choice.equals("99")) {
 			choice = choice.toUpperCase();
-			int exist = 0;
-			for (int i = 0; i < dao.getPizzas().size(); i++) {
-				if (dao.getPizzas().get(i).getCode().equals(choice)) {
-					exist++;
-				}
-			}
-			if(exist == 0) {
-				PizerriaAdminConsoleApp.getLogfull().error("Erreur le code de la pizza n'est pas reconnu");
+			if(dao.doesPizzaExist(choice) == false) {
+				LOGGER.error("Erreur le code de la pizza n'est pas reconnu");
 				throw new DeletePizzaException("Erreur le code de la pizza n'est pas reconnu");
 			}
 			return dao.deletePizza(choice);

@@ -1,7 +1,6 @@
 package fr.pizzeria.dao;
 
 import java.util.ArrayList;
-
 import fr.pizzeria.model.Pizza;
 
 public class PizzaDao implements IPizzaDao {
@@ -74,6 +73,27 @@ public class PizzaDao implements IPizzaDao {
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Test if pizza exist
+	 * @param codePizza
+	 * @return
+	 */
+	public boolean doesPizzaExist(String codePizza) {
+		int exist = 0;
+		for (int i = 0; i < this.getPizzas().size(); i++) {
+			if (this.getPizzas().get(i).getCode().equals(codePizza)) {
+				exist++;
+			}
+		}
+		if(exist == 0) {
+			return false;
+		} else {
+			return true;
+		}
+
+		
 	}
 	
 	/* GETTERS AND SETTERS */

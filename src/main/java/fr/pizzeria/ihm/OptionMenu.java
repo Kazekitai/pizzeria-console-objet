@@ -1,14 +1,15 @@
 package fr.pizzeria.ihm;
 
-import java.util.Scanner;
-
-import fr.pizzeria.console.PizerriaAdminConsoleApp;
+import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.model.Pizza;
 
 public abstract class OptionMenu {
 	/* ATTRIBUTES */
-	Scanner scanner = new Scanner(System.in);
+	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
 	public OptionMenu() {
 	}
@@ -31,9 +32,10 @@ public abstract class OptionMenu {
 	 * Method to display list of pizza
 	 */
 	public boolean displayPizzaList(IPizzaDao dao) {
-		PizerriaAdminConsoleApp.getLog().trace("\nListe des pizzas (" + dao.getPizzas().size() + " pizza)\n");
-		for (int i = 0; i < dao.getPizzas().size(); i++) {
-			PizerriaAdminConsoleApp.getLog().trace(dao.getPizzas().get(i).toString());
+		ArrayList<Pizza> pizzas = dao.findAllPizza();
+		LOGINFO.trace("\nListe des pizzas (" + pizzas.size() + " pizza)\n");
+		for (int i = 0; i < pizzas.size(); i++) {
+			LOGINFO.trace(pizzas.get(i).toString());
 		}
 		return true;
 	}

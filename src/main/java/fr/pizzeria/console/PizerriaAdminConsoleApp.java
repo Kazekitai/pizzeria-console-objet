@@ -8,23 +8,13 @@ import com.github.lalyos.jfiglet.FigletFont;
 import fr.pizzeria.ihm.Menu;
 
 public class PizerriaAdminConsoleApp {
-	
-	private static final Logger LOG = LoggerFactory.getLogger("logger1");
-	private static final Logger LOGFULL = LoggerFactory.getLogger("logger2");
 
 	public static void main(String[] args) {
+		final Logger LOG = LoggerFactory.getLogger("logger1");
 		Menu menu = new Menu();
 		String asciiArt = FigletFont.convertOneLine("Pizzeria");
-		PizerriaAdminConsoleApp.getLog().trace(asciiArt);
+		LOG.trace(asciiArt);
 		menu.afficher();
-	}
-
-	public static Logger getLog() {
-		return LOG;
-	}
-
-	public static Logger getLogfull() {
-		return LOGFULL;
 	}
 
 

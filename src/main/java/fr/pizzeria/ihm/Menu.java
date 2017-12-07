@@ -2,16 +2,18 @@ package fr.pizzeria.ihm;
 
 import java.util.HashMap;
 import java.util.Scanner;
-
-
-import fr.pizzeria.console.PizerriaAdminConsoleApp;
-import fr.pizzeria.dao.PizzaDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import fr.pizzeria.dao.jdbc.PizzaDaoJdbc;
 import fr.pizzeria.exception.StockageException;
 
 public class Menu {
 	/* ATTRIBUTES */
-	Scanner scanner = new Scanner(System.in);
-	private PizzaDao dao = new PizzaDao();
+	private Scanner scanner = new Scanner(System.in);
+	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
+	
+//	private PizzaDao dao = new PizzaDao();
+	private PizzaDaoJdbc dao = new PizzaDaoJdbc();
 	private String title;
 	private HashMap<Integer,OptionMenu> optionMenus = new HashMap<Integer,OptionMenu>();
 	private static final int DISPLAY_PIZZA = 0;
@@ -68,10 +70,10 @@ public class Menu {
 				}
 				break;
 			case 99:
-				PizerriaAdminConsoleApp.getLog().trace("\nAu revoir " + ":(");
+				LOGINFO.trace("\nAu revoir " + ":(");
 				break;
 			default:
-				PizerriaAdminConsoleApp.getLog().trace("\nCette option n'existe pas!");
+				LOGINFO.trace("\nCette option n'existe pas!");
 				break;
 			}
 		}
@@ -82,14 +84,14 @@ public class Menu {
 	 * Method to display Pizzeria menu for administrator
 	 */
 	public void displayMenu() {
-		PizerriaAdminConsoleApp.getLog().trace("\n" + this.title);
+		LOGINFO.trace("\n" + this.title);
 		for (int i = 0; i < optionMenus.size() ; i++) {
 			if (optionMenus.get(i) != null) {
-				PizerriaAdminConsoleApp.getLog().trace((i + 1) + ". " + optionMenus.get(i).getLabel());
+				LOGINFO.trace((i + 1) + ". " + optionMenus.get(i).getLabel());
 			}
 		}
-		PizerriaAdminConsoleApp.getLog().trace("99. Sortir.");
-		PizerriaAdminConsoleApp.getLog().trace("Quelle action voulez-vous effectuer?");
+		LOGINFO.trace("99. Sortir.");
+		LOGINFO.trace("Quelle action voulez-vous effectuer?");
 	}
 
 	/* GETTER */
