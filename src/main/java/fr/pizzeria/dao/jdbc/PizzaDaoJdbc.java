@@ -55,6 +55,14 @@ public class PizzaDaoJdbc implements IPizzaDao {
 			LOGGER.error(e.getMessage());
 			throw new StopApplicationException(e.getMessage());
 		} finally {
+			if (resultats != null) {
+				try {
+					resultats.close();
+				} catch (SQLException e) {
+					LOGGER.error(e.getMessage());
+					throw new StopApplicationException(e.getMessage());
+				}
+			}
 			if (selectPizzaSt != null) {
 				try {
 					selectPizzaSt.close();
@@ -63,7 +71,7 @@ public class PizzaDaoJdbc implements IPizzaDao {
 					throw new StopApplicationException(e.getMessage());
 				}
 			}
-			if (resultats != null) {
+			if (DbManager.getInstance().getConnection() != null) {
 				try {
 					DbManager.getInstance().getConnection().close();
 				} catch (SQLException e) {
@@ -113,7 +121,7 @@ public class PizzaDaoJdbc implements IPizzaDao {
 					throw new StopApplicationException(e.getMessage());
 				}
 			}
-			if (resultat != 0) {
+			if (DbManager.getInstance().getConnection() != null) {
 				try {
 					DbManager.getInstance().getConnection().close();
 				} catch (SQLException e) {
@@ -167,7 +175,7 @@ public class PizzaDaoJdbc implements IPizzaDao {
 					throw new StopApplicationException(e.getMessage());
 				}
 			}
-			if (resultat != 0) {
+			if (DbManager.getInstance().getConnection() != null) {
 				try {
 					DbManager.getInstance().getConnection().close();
 				} catch (SQLException e) {
