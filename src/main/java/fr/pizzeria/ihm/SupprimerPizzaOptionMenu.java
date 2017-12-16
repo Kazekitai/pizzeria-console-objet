@@ -13,11 +13,25 @@ import fr.pizzeria.exception.DeletePizzaException;
  */
 public class SupprimerPizzaOptionMenu extends OptionMenu {
 	/* ATTRIBUTES */
-	IPizzaDao dao;
+	/**
+	 * A data access object
+	 */
+	private IPizzaDao dao;
+	
+	/**
+	 * An object to interact with user
+	 */
 	Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * Logger object for error messages
+	 */
 	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
-	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
-
+	
+	/**
+	 * Logger object for display information inside console
+	 */
+	private final Logger LOGINFO = LoggerFactory.getLogger("logger1");
 	/* CONSTRUCTOR */
 	/**
 	 * Constructor with one parameter
@@ -55,7 +69,7 @@ public class SupprimerPizzaOptionMenu extends OptionMenu {
 		LOGINFO.trace("\nSupression d'une pizza");
 		super.displayPizzaList(dao);
 		LOGINFO.trace("99 pour abandonner");
-		LOGINFO.trace("Veuillez choisir la pizza Ã  supprimer (saisir le code) : ");
+		LOGINFO.trace("Veuillez choisir la pizza à supprimer (saisir le code) : ");
 		String choice = scanner.nextLine();
 		if (!choice.equals("99")) {
 			choice = choice.toUpperCase();

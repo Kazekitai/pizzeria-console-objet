@@ -8,7 +8,12 @@ import fr.pizzeria.dao.IPizzaDao;
  *
  */
 public class ListerPizzasOptionMenu extends OptionMenu {
+	
 	/* ATTRIBUTES */
+	
+	/**
+	 * A data access object
+	 */
 	IPizzaDao dao;
 
 	/* CONSTRUCTOR */

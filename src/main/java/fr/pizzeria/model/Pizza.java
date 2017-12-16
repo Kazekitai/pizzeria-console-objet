@@ -2,22 +2,60 @@ package fr.pizzeria.model;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Class Pizza
  * 
  * @author Sandra Le Thiec
  *
+ *
  */
+@Entity
+@Table(name = "pizza")
 public class Pizza {
 	/* ATTRIBUTES */
+	/**
+	 * A pizza id
+	 */
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	/**
+	 * A pizza code
+	 */
 	@ToString(separator = " -> ", uppercase = true)
+	@Column(name = "code")
 	private String code;
+	
+	/**
+	 * A pizza name
+	 */
 	@ToString(uppercase = true)
+	@Column(name = "nom")
 	private String nom;
-	@ToString(separator = " â‚¬ - ")
+	
+	/**
+	 * A pizza price
+	 */
+	@ToString(separator = " € - ")
+	@Column(name = "prix")
 	private double prix;
+	
+	/**
+	 * A pizza category
+	 */
 	@ToString
+	@Column(name = "categorie")
+	@Enumerated(EnumType.STRING)
 	private CategoriePizza categoriePizza;
 
 	/* CONSTRUCTOR */
@@ -39,7 +77,6 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-		// this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
 		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 	}
 
@@ -56,7 +93,6 @@ public class Pizza {
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
-		// this.categoriePizza = CategoriePizza.valueOf(categorie.toUpperCase());
 		this.categoriePizza = CategoriePizza.valueOf(getCategoryKey(categorie));
 		int j = 0;
 		for (int i = 0; i < pizzas.size(); i++) {

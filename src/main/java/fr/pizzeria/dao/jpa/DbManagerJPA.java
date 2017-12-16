@@ -14,9 +14,24 @@ import javax.persistence.Persistence;
  */
 public class DbManagerJPA {
 	/* ATTRIBUTES */
+	/**
+	 * An Object to manage database access
+	 */
 	private static DbManagerJPA singleton;
+	
+	/**
+	 * An entity manager factory
+	 */
 	private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("pizzeria");
+	
+	/**
+	 * An entity manager
+	 */
 	private EntityManager entityManager = entityManagerFactory.createEntityManager();
+	
+	/**
+	 * An entity transaction
+	 */
 	private EntityTransaction entityTransaction = entityManager.getTransaction();
 
 	/* CONSTRUCTOR */
@@ -47,6 +62,9 @@ public class DbManagerJPA {
 	 * @return the entityManagerFactory
 	 */
 	public EntityManagerFactory getEntityManagerFactory() {
+		if(!entityManagerFactory.isOpen()) {
+			entityManagerFactory = Persistence.createEntityManagerFactory("pizzeria");
+		}
 		return entityManagerFactory;
 	}
 
@@ -61,6 +79,9 @@ public class DbManagerJPA {
 	 * @return the entityManager
 	 */
 	public EntityManager getEntityManager() {
+		if(!entityManager.isOpen()) {
+			entityManager = this.getEntityManagerFactory().createEntityManager();
+		}
 		return entityManager;
 	}
 
@@ -75,6 +96,9 @@ public class DbManagerJPA {
 	 * @return the entityTransaction
 	 */
 	public EntityTransaction getEntityTransaction() {
+		if(!entityTransaction.isActive()) {
+			entityTransaction = this.getEntityManager().getTransaction();
+		}
 		return entityTransaction;
 	}
 

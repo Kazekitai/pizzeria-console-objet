@@ -105,7 +105,7 @@ public class PizzaDaoJdbc implements IPizzaDao {
 				prepStat.close();
 				DbManager.getInstance().getConnection().close();
 			} else {
-				LOGGER.error("La pizza est d√©j√† pr√©sente dans la base");
+				LOGGER.error("La pizza est dÈj‡† prÈsente dans la base");
 			}
 			return true;
 

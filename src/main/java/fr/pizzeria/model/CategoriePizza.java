@@ -8,12 +8,15 @@ package fr.pizzeria.model;
 public enum CategoriePizza {
 	
 	/* ENUMERATION */
-	// L'énumération possède 3 instances
+	// Enumeration has 3 instances
 	VIANDE("Viande"),
 	POISSON("Poisson"),
 	SANS_VIANDE("Sans Viande");
 	
 	/* ATTRIBUE */
+	/**
+	 * A value
+	 */
 	private String value;
 	
 	/* CONSTRUCTOR */

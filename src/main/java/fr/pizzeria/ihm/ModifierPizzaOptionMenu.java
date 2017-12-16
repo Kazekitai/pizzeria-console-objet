@@ -15,10 +15,27 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public class ModifierPizzaOptionMenu extends OptionMenu {
+	
 	/* ATTRIBUTES */
+	
+	/**
+	 * A data access object
+	 */
 	IPizzaDao dao;
+	
+	/**
+	 * An object to interact with user
+	 */
 	Scanner scanner = new Scanner(System.in);
+
+	/**
+	 * Logger object for error messages
+	 */
 	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
+	
+	/**
+	 * Logger object for display information inside console
+	 */
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1");
 
 	/* CONSTRUCTOR */
@@ -44,17 +61,17 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 	 * @return
 	 */
 	public String getLabel() {
-		return "Mettre Ã  jour une pizza";
+		return "Mettre à jour une pizza";
 	}
 
 	/**
 	 * Display menu 3 to update pizza
 	 */
 	public boolean displayMenu3() throws UpdatePizzaException {
-		LOGINFO.trace("\nMise Ã  jour d'une pizza");
+		LOGINFO.trace("\nMise à  jour d'une pizza");
 		super.displayPizzaList(dao);
 		LOGINFO.trace("99 pour abandonner");
-		LOGINFO.trace("Veuillez choisir la pizza Ã  modifier (saisir le code) : ");
+		LOGINFO.trace("Veuillez choisir la pizza à  modifier (saisir le code) : ");
 		String choice = scanner.nextLine();
 
 		if (!choice.equals("99")) {
@@ -72,8 +89,8 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 			}
 
 			if (code.length() != 3) {
-				LOGGER.error("Erreur le nombre de caractÃ¨res du code de la pizza est diffï¿½rent 3");
-				throw new UpdatePizzaException("Erreur le nombre de caractÃ¨res du code de la pizza est diffï¿½rent 3");
+				LOGGER.error("Erreur le nombre de caractères du code de la pizza est différent 3");
+				throw new UpdatePizzaException("Erreur le nombre de caractères du code de la pizza est différent 3");
 			}
 
 			LOGINFO.trace("Veuillez saisir le nom: ");
@@ -84,11 +101,11 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 				throw new UpdatePizzaException("Erreur le nom de la pizza est vide ");
 			}
 
-			LOGINFO.trace("*** CatÃ©gories ***");
+			LOGINFO.trace("*** Catégories ***");
 			for (CategoriePizza categories : CategoriePizza.values()) {
 				LOGINFO.trace(categories.getValue());
 			}
-			LOGINFO.trace("Veuillez saisir la catÃ©gorie: ");
+			LOGINFO.trace("Veuillez saisir la catégorie: ");
 			String categorie = scanner.nextLine();
 			categorie = upperCaseAllFirst(categorie);
 			int categoryExist = 0;
@@ -116,15 +133,15 @@ public class ModifierPizzaOptionMenu extends OptionMenu {
 
 			try {
 				if (Double.parseDouble(prixStr) < 0) {
-					LOGGER.error("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
-					throw new UpdatePizzaException("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
+					LOGGER.error("Erreur le prix ne peux pas être négatif");
+					throw new UpdatePizzaException("Erreur le prix ne peux pas être négatif");
 				}
 				double prix = Double.parseDouble(prixStr);
 				code = code.toUpperCase();
 				Pizza pizza = new Pizza(code, nom, categoryValue, prix);
 				return this.dao.updatePizza(choice, pizza);
 			} catch (NumberFormatException e) {
-				LOGGER.error("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu Ãªtre ajoutÃ©e");
+				LOGGER.error("Erreur: Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
 				return false;
 			}
 

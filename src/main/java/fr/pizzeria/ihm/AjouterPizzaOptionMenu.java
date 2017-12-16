@@ -14,10 +14,27 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public class AjouterPizzaOptionMenu extends OptionMenu {
+	
 	/* ATTRIBUTES */
+	
+	/**
+	 * A data access object
+	 */
 	private IPizzaDao dao;
+	
+	/**
+	 * An object to interact with user
+	 */
 	Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * Logger object for error messages
+	 */
 	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
+	
+	/**
+	 * Logger object for display information inside console
+	 */
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1");
 
 	/* CONSTRUCTOR */
@@ -64,8 +81,8 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 		}
 
 		if (code.length() != 3) {
-			LOGGER.error("Erreur le nombre de caractÃ¨res du code de la pizza est diffÃ©rent de 3");
-			throw new SavePizzaException("Erreur le nombre de caractÃ¨res du code de la pizza est diffÃ©rent de 3");
+			LOGGER.error("Erreur le nombre de caractères du code de la pizza est différent de 3");
+			throw new SavePizzaException("Erreur le nombre de caractères du code de la pizza est différent de 3");
 		}
 
 		LOGINFO.trace("Veuillez saisir le nom: ");
@@ -76,11 +93,11 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 			throw new SavePizzaException("Erreur le nom de la pizza est vide ");
 		}
 
-		LOGINFO.trace("*** CatÃ©gories ***");
+		LOGINFO.trace("*** Catégories ***");
 		for (CategoriePizza categories : CategoriePizza.values()) {
 			LOGINFO.info(categories.getValue());
 		}
-		LOGINFO.trace("Veuillez saisir la catÃ©gorie: ");
+		LOGINFO.trace("Veuillez saisir la catégorie: ");
 		String categorie = scanner.nextLine();
 		categorie = upperCaseAllFirst(categorie);
 		int exist = 0;
@@ -107,15 +124,15 @@ public class AjouterPizzaOptionMenu extends OptionMenu {
 
 		try {
 			if (Double.parseDouble(prixStr) < 0) {
-				LOGGER.error("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
-				throw new SavePizzaException("Erreur le prix ne peux pas Ãªtre nÃ©gatif");
+				LOGGER.error("Erreur le prix ne peux pas être négatif");
+				throw new SavePizzaException("Erreur le prix ne peux pas être négatif");
 			}
 			double prix = Double.parseDouble(prixStr);
 			code = code.toUpperCase();
 			Pizza pizza = new Pizza(code, nom, categoryValue, prix);
 			return this.dao.saveNewPizza(pizza);
 		} catch (NumberFormatException e) {
-			LOGGER.error("Le prix n'est pas un nombre. La pizza n'a pas pu tre ajoutÃ©e");
+			LOGGER.error("Le prix n'est pas un nombre. La pizza n'a pas pu être ajoutée");
 			return false;
 		}
 	}

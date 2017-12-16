@@ -7,17 +7,36 @@ import java.util.ResourceBundle;
 import fr.pizzeria.exception.runtime.StopApplicationException;
 
 /**
- * Class to connect application with database
+ * Class to connect application with database using jdbc
  * 
  * @author Sandra Le Thiec
  *
  */
 public class DbManager {
 	/* ATTRIBUTES */
+	/**
+	 * A connection
+	 */
 	private Connection connection = null;
+	
+	/**
+	 * An Object to manage database access
+	 */
 	private static DbManager singleton;
+	
+	/**
+	 * database url
+	 */
 	private String url;
+	
+	/**
+	 * database user
+	 */
 	private String user;
+	
+	/**
+	 * database password
+	 */
 	private String password;
 
 	/* CONSTRUCTOR */
@@ -42,13 +61,13 @@ public class DbManager {
 	}
 
 	/**
-	 * Connexion à la base de données
+	 * Database connection
 	 * 
 	 * @return
 	 */
 	public void openDbConnection() {
 		/*
-		 * Cette ligne exécute un bloc static dans la classe Driver qui effectue ceci:
+		 * This line execute a static bloc into Driver class which run following action: 
 		 * DriverManager.registerDriver(new org.mariadb.jdbc.Driver();
 		 */
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
@@ -62,7 +81,7 @@ public class DbManager {
 		this.user = bundle.getString("pizzeria.user");
 		this.password = bundle.getString("pizerria.password");
 
-		// Tester si connection ouverte
+		// Test if connection is opened
 		Connection conn;
 		try {
 			conn = DriverManager.getConnection(this.url, this.user, this.password);

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import fr.pizzeria.dao.jdbc.PizzaDaoJdbc;
+import fr.pizzeria.dao.jpa.PizzaDaoJPA;
 import fr.pizzeria.exception.StockageException;
 
 /**
@@ -13,17 +13,52 @@ import fr.pizzeria.exception.StockageException;
  *
  */
 public class Menu {
+	
 	/* ATTRIBUTES */
+	
+	/**
+	 * An object to interact with user
+	 */
 	private Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * Logger object for display information inside console
+	 */
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 	
-//	private PizzaDao dao = new PizzaDao();
-	private PizzaDaoJdbc dao = new PizzaDaoJdbc();
+	/**
+	 * A data access object
+	 */
+	private PizzaDaoJPA dao = new PizzaDaoJPA();
+	
+	/**
+	 * Menu title
+	 */
 	private String title;
+	
+	/**
+	 * Menu options
+	 */
 	private HashMap<Integer,OptionMenu> optionMenus = new HashMap<Integer,OptionMenu>();
+	
+	/**
+	 * Menu index to instantiate ListerPizzasOptionMenu class
+	 */
 	private static final int DISPLAY_PIZZA = 0;
+	
+	/**
+	 * Menu index to instantiate AjouterPizzaOptionMenu class
+	 */
 	private static final int ADD_PIZZA = 1;
+	
+	/**
+	 * Menu index to instantiate ModifierPizzaOptionMenu class
+	 */
 	private static final int UPDATE_PIZZA = 2;
+	
+	/**
+	 * Menu index to instantiate SupprimerPizzaOptionMenu class
+	 */
 	private static final int DELETE_PIZZA = 3;
 
 	/* CONSTRUCTOR */
@@ -103,6 +138,10 @@ public class Menu {
 	}
 
 	/* GETTER */
+	/**
+	 * Get menu options
+	 * @return
+	 */
 	public HashMap<Integer,OptionMenu> getOptionMenus() {
 		return optionMenus;
 	}

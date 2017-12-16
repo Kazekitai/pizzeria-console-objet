@@ -10,6 +10,9 @@ import fr.pizzeria.model.Pizza;
  */
 public class PizzaDao implements IPizzaDao {
 	/* ATTRIBUTES */
+	/**
+	 * A list of pizza
+	 */
 	private ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
 	
 	/* CONSTRUCTOR */

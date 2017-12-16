@@ -1,32 +1,34 @@
 package fr.pizzeria.dao.jpa;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.TypedQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import fr.pizzeria.dao.IPizzaDao;
 import fr.pizzeria.model.Pizza;
 
 /**
- *Dao Class to manipulate data from database
+ *Dao Class to manipulate data from database using JPA
  * 
  * @author Sandra Le Thiec
  *
  */
 public class PizzaDaoJPA implements IPizzaDao {
-	/* ATTRIBUTES */
-	private final Logger LOGGER = LoggerFactory.getLogger("logger2");
-
+	
 	/* CONSTRUCTOR */
 	/**
-	 * Constructor PizzaDaoJdbc
+	 * Constructor PizzaDaoJPA
 	 */
 	public PizzaDaoJPA() {
+		/* Initialization of pizza list */
+		saveNewPizza(new Pizza("PEP","Pépéroni","Viande",12.50));
+		saveNewPizza(new Pizza("MAR","Margherita","Sans Viande",14.00));
+		saveNewPizza(new Pizza("REI","La Reine","Sans Viande",11.50));
+		saveNewPizza(new Pizza("FRO","La 4 fromage","Viande",12.50));
+		saveNewPizza(new Pizza("CAN","La Cannibale","Viande",12.50));
+		saveNewPizza(new Pizza("SAV","La Savoyarde","Viande",13.00));
+		saveNewPizza(new Pizza("ORI","L'Orientale","Viande",13.50));
+		saveNewPizza(new Pizza("IND","L'Indienne","Viande",14.00));
 	}
 
 	/* METHODS */
@@ -52,12 +54,14 @@ public class PizzaDaoJPA implements IPizzaDao {
 	 */
 	@Override
 	public boolean saveNewPizza(Pizza pizza) {
-		if (doesPizzaExist(pizza.getCode()) == false) {
-			DbManagerJPA.getInstance().getEntityManager().getTransaction().begin();
+		Pizza pizzaExist = getPizzaBycode(pizza.getCode());
+		if(pizzaExist == null) {
+			DbManagerJPA.getInstance().getEntityManager().getTransaction().begin();	
 			DbManagerJPA.getInstance().getEntityManager().persist(pizza);
 			DbManagerJPA.getInstance().getEntityManager().getTransaction().commit();
 			DbManagerJPA.getInstance().getEntityManager().close();
 			DbManagerJPA.getInstance().getEntityManagerFactory().close();
+			return true;
 		}
 				
 		return false;
@@ -71,12 +75,18 @@ public class PizzaDaoJPA implements IPizzaDao {
 	 */
 	@Override
 	public boolean updatePizza(String codePizza, Pizza pizza) {
-		if (doesPizzaExist(codePizza) == false) {
+		Pizza pizzaToUpdate = getPizzaBycode(codePizza);
+		if(pizzaToUpdate != null) {
+			pizzaToUpdate.setCategoriePizza(pizza.getCategoriePizza());
+			pizzaToUpdate.setCode(pizza.getCode());
+			pizzaToUpdate.setNom(pizza.getNom());
+			pizzaToUpdate.setPrix(pizza.getPrix());
 			DbManagerJPA.getInstance().getEntityManager().getTransaction().begin();
-			DbManagerJPA.getInstance().getEntityManager().merge(pizza);
+			DbManagerJPA.getInstance().getEntityManager().merge(pizzaToUpdate);
 			DbManagerJPA.getInstance().getEntityManager().getTransaction().commit();
 			DbManagerJPA.getInstance().getEntityManager().close();
 			DbManagerJPA.getInstance().getEntityManagerFactory().close();
+			return true;
 		}
 				
 		return false;
@@ -90,34 +100,48 @@ public class PizzaDaoJPA implements IPizzaDao {
 	@Override
 	public boolean deletePizza(String codePizza) {
 		
+		Pizza pizza = getPizzaBycode(codePizza);
+		if(pizza != null) {
+			DbManagerJPA.getInstance().getEntityManager().getTransaction().begin();
+			DbManagerJPA.getInstance().getEntityManager().remove(pizza);
+			DbManagerJPA.getInstance().getEntityManager().getTransaction().commit();
+			DbManagerJPA.getInstance().getEntityManager().close();
+			DbManagerJPA.getInstance().getEntityManagerFactory().close();
+			return true;
+		}
+				
 		return false;
 	}
-
+	
+	/**
+	 * Get pizza by pizza code
+	 * 
+	 * @param codePizza
+	 */
+	public Pizza getPizzaBycode(String codePizza) {
+		TypedQuery<Pizza> query = DbManagerJPA.getInstance().getEntityManager().createQuery("SELECT p FROM Pizza p WHERE p.code= :code", Pizza.class);
+		query.setParameter("code", codePizza);
+		Pizza pizza = null;
+		List<Pizza> pizzas = query.getResultList();
+		if(pizzas.size() > 0) {
+			pizza = pizzas.get(0);
+		}			
+		return pizza;
+	}
+	
 	/**
 	 * Test if pizza exist
-	 * 
 	 * @param codePizza
 	 * @return
 	 */
 	public boolean doesPizzaExist(String codePizza) {
-//		try {
-//			DbManagerJPA.getInstance().openDbConnection();
-//			String selectQuery = "SELECT * FROM pizza";
-//			PreparedStatement selectPizzaSt = DbManagerJPA.getInstance().getConnection().prepareStatement(selectQuery);
-//			ResultSet resultats = selectPizzaSt.executeQuery();
-//			while (resultats.next()) {
-//				if (resultats.getString("CODE").equals(codePizza)) {
-//					return true;
-//				}
-//			}
-//			selectPizzaSt.close();
-//			DbManagerJPA.getInstance().getConnection().close();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
-		return false;
+		Pizza pizza = getPizzaBycode(codePizza);
+		if(pizza != null) {
+			return true;
+		}	
+		return false;	
 	}
+		
+
 
 }

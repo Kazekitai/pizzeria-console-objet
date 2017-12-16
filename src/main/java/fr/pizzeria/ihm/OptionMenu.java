@@ -13,7 +13,12 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public abstract class OptionMenu {
+	
 	/* ATTRIBUTES */
+	
+	/**
+	 * Logger object for display information inside console
+	 */
 	private final Logger LOGINFO = LoggerFactory.getLogger("logger1"); 
 
 	/* CONSTRUCTOR */
